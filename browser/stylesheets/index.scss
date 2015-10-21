@@ -1,0 +1,76 @@
+﻿@import 'partials/_layouts.scss';
+@import 'partials/_mixins.scss';
+@import 'partials/_theme.scss';
+
+body.splash-animating {
+    overflow: hidden;
+}
+
+#splash-screen {
+    @include layout-vertical;
+    @include layout-center;
+    @include layout-center-justified;
+    background-color: $theme-loading-background;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 20;
+
+    &.loading {
+        z-index: 100;
+    }
+}
+
+#splash-card {
+    @include transition(transition-standard(background-color));
+    @include layout-vertical;
+    @include layout-center;
+    @include border-radius(8px);
+    background-color: rgba(0, 0, 0, 0);
+    padding: 40px;
+
+    &.loading {
+        background-color: $white-primary;
+    }
+
+    #splash-title {
+        @include transition(transition-standard(color));
+        color: rgba(0, 0, 0, 0);
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 28px;
+        margin: 0 0 4px;
+
+        &.loading {
+            color: $black-primary;
+        }
+    }
+}
+
+#splash-spinner {
+    @include transition(transition-standard((height, width, margin)));
+    height: 28px;
+    width: 28px;
+    margin: 1em 0 0.5em;
+
+    &.loading {
+        height: 0;
+        margin: 0;
+        width: 0;
+    }
+}
+
+#noootes-toast {
+    background-color: $theme-primary-dark;
+    color: $white-primary;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-width: initial;
+    text-align: center;
+    z-index: 10000;
+
+    #label {
+        white-space: pre;
+    }
+}

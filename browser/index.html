@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>COMP3001</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no" />
+
+    <!--<link rel="icon" href="media/favicon.ico" />-->
+
+    <!-- Stylesheets & Loaders -->
+    <link rel="stylesheet" href="stylesheets/index.css?__inline=true" />
+    <link rel="stylesheet" href="stylesheets/theme.css?__inline=true" />
+    <link rel="stylesheet" href="stylesheets/paper-theme.css?__inline=true" />
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/load.js" async></script>
+    <script src="scripts/util.js" async></script>
+</head>
+<body>
+    <splash-screen id="splash-screen" class="loading">
+        <paper-material id="splash-card" class="loading" animated="true" elevation="0">
+            <span id="splash-title" class="loading">Welcome!</span>
+            <paper-spinner id="splash-spinner" class="loading" active="true"></paper-spinner>
+        </paper-material>
+    </splash-screen>
+    <screen-main class="fit"></screen-main>
+    <paper-toast id="app-toast"></paper-toast>
+</body>
+</html>

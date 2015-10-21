@@ -1,0 +1,33 @@
+@import '../../stylesheets/partials/_layouts.scss';
+@import '../../stylesheets/partials/_mixins.scss';
+@import '../../stylesheets/partials/_theme.scss';
+
+:host {
+    display: block;
+}
+
+#page-loader {
+    @include transition(transition-standard(background-color));
+    z-index: -10;
+    background-color: rgba(0, 0, 0, 0);
+
+    &.loading {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &.block {
+        z-index: 10;
+    }
+
+    #page-spinner::shadow .spinner-layer {
+        border-color: $theme-accent;
+    }
+}
+
+neon-animated-pages {
+    overflow-y: auto;
+
+    & > * {
+        height: auto;
+    }
+}

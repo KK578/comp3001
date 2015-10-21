@@ -1,0 +1,107 @@
+﻿@import 'partials/_layouts.scss';
+@import 'partials/_mixins.scss';
+@import 'partials/_theme.scss';
+
+/* Applies theme colouring to most paper-element items. */
+/* paper-header-panel */
+paper-header-panel {
+    background-color: $theme-background;
+}
+
+/* paper-toolbar */
+paper-toolbar.paper-toolbar-0 {
+    background-color: $theme-primary;
+}
+
+/* paper-ripple */
+paper-icon-button.paper-icon-button-0 paper-ripple#ink.paper-icon-button,
+paper-ripple {
+    color: $theme-accent;
+}
+
+/* paper-dialog */
+paper-dialog {
+    @include border-radius(4px);
+    background-color: $white-primary;
+}
+
+/* paper-material */
+:not(paper-button):not(paper-fab) > paper-material {
+    @include border-radius(4px);
+    padding: 20px;
+    margin: 16px 12px;
+    background-color: $white-primary;
+
+    > :first-child {
+        margin-top: 0;
+    }
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* paper-item */
+paper-item:focus {
+    outline: none;
+}
+
+/* paper-button */
+paper-button {
+    text-transform: none;
+}
+
+/* paper-fab */
+paper-fab.paper-fab-0 {
+    background-color: $theme-accent;
+}
+
+/* paper-input */
+paper-input-container.paper-input-container-0 {
+    .paper-input-container {
+        &.input-content {
+            label {
+                color: $black-secondary;
+            }
+
+            &.label-is-floating.label-is-highlighted label {
+                color: $theme-primary;
+            }
+        }
+
+        &.underline.is-highlighted .focused-line {
+            background-color: $theme-primary;
+        }
+    }
+}
+
+/* paper-radio-button */
+paper-radio-button.paper-radio-button-0 {
+    .paper-radio-button {
+        &#onRadio {
+            background-color: $theme-primary;
+        }
+
+        &#ink, #ink[checked] {
+            color: $theme-accent;
+        }
+    }
+
+    &[checked] #offRadio.paper-radio-button {
+        border-color: $theme-primary;
+    }
+}
+
+/* paper-checkbox */
+paper-checkbox.paper-checkbox-0 {
+    .paper-checkbox {
+        &#ink, #ink[checked] {
+            color: $theme-accent;
+        }
+
+        &#checkbox.checked {
+            background-color: $theme-primary;
+            border-color: $theme-primary;
+        }
+    }
+}
