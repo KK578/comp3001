@@ -54,6 +54,11 @@ paper-button {
 /* paper-fab */
 paper-fab.paper-fab-0 {
     background-color: $theme-accent;
+
+    &.keyboard-focus {
+        color: $white-secondary;
+        background-color: $theme-accent-dark;
+    }
 }
 
 /* paper-input */
