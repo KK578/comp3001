@@ -4,6 +4,8 @@ node_js:
 cache:
   directories:
     - node_modules
+notifications:
+  slack: comp3001:v2KOKh1ja8a3kV8N7SrdFP7d
 install:
   - npm install
   - npm install -g grunt-cli

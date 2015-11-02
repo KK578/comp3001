@@ -1,5 +1,7 @@
 # comp3001
 
+[![Build Status](https://travis-ci.org/KK578/comp3001.svg?branch=master)](https://travis-ci.org/KK578/comp3001)
+
 ## Setup
 
 ### Prerequisites
