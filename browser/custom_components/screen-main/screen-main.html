@@ -22,7 +22,7 @@
 <dom-module id="screen-main">
     <link rel="import" type="css" href="screen-main.css?__inline" />
     <template>
-        <paper-drawer-panel id="drawer-container">
+        <paper-drawer-panel id="drawer-container" force-narrow>
             <!-- Navigation Drawer -->
             <paper-header-panel drawer>
                 <paper-toolbar>
@@ -43,12 +43,7 @@
             </paper-header-panel>
 
             <!-- Content -->
-            <paper-header-panel main>
-                <paper-toolbar>
-                    <h2>Placeholder Toolbar!</h2>
-                </paper-toolbar>
-                <routed-pages class="fit"></routed-pages>
-            </paper-header-panel>
+            <routed-pages class="fit" main></routed-pages>
         </paper-drawer-panel>
     </template>
     <script src="screen-main.js?__inline"></script>
