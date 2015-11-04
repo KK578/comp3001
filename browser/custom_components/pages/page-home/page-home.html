@@ -8,14 +8,50 @@
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
+<!-- Other:Maps -->
 <link rel="import" href="../../../bower_components/google-map/google-map.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-point.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-poly.html" />
+
 <link rel="import" href="../../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
 <dom-module id="page-home">
     <link rel="import" type="css" href="page-home.css?__inline" />
     <template>
-        <google-map class="fit" latitude="51.5100" longitude="-360.1212"></google-map>
+        <!--<google-map class="fit" latitude="51.5100" longitude="-360.1212">-->
+        <google-map id="map-canvas" class="fit" latitude="51.524564" longitude="-0.131917" zoom="17">
+            <!--<google-map-poly>-->
+                <!--<template is="dom-repeat" as="pt" items="{{path}}">-->
+                    <!--<google-map-point latitude="{{pt.lat}}" longitude="{{pt.lng}}"></google-map-point>-->
+                <!--</template>-->
+            <!--</google-map-poly>-->
 
+            <google-map-poly>
+                <google-map-point latitude="51.525831" longitude="-0.131919"></google-map-point>
+                <google-map-point latitude="51.526185" longitude="-0.132293"></google-map-point>
+                <google-map-point latitude="51.525870" longitude="-0.133213"></google-map-point>
+                <google-map-point latitude="51.523459" longitude="-0.130765"></google-map-point>
+                <google-map-point latitude="51.523325" longitude="-0.130961"></google-map-point>
+                <google-map-point latitude="51.523072" longitude="-0.131105"></google-map-point>
+                <google-map-point latitude="51.522869" longitude="-0.131550"></google-map-point>
+                <google-map-point latitude="51.523187" longitude="-0.131942"></google-map-point>
+            </google-map-poly>
+
+        </google-map>
+
+        <!--Testing script-->
+        <!--<script>-->
+            <!--Polymer({-->
+                <!--is: 'page-home',-->
+                <!--properties: {-->
+                    <!--path: {-->
+                        <!--type: Array,-->
+                        <!--notify: true,-->
+                        <!--value: function(){ return []; }-->
+                    <!--}-->
+                <!--}-->
+            <!--});-->
+        <!--</script>-->
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
             <div class="dropdown-content">
