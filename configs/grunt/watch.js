@@ -11,7 +11,7 @@
         files: ['browser/custom_components/**/*', 'browser/behaviors/**/*'],
         tasks: [
             'jshint:components',
-            'jscs:components',
+            //'jscs:components',
             'build-components'
         ]
     },
@@ -31,7 +31,7 @@
         tasks: [
             'express:developer:stop',
             'jshint:server',
-            'jscs:server',
+            //'jscs:server',
             'build-server',
             'express:developer'
         ]
@@ -48,7 +48,7 @@
         ],
         tasks: [
             'jshint:views',
-            'jscs:views',
+            //'jscs:views',
             'build-views'
         ]
     },
@@ -56,7 +56,7 @@
         files: ['browser/test/**/*'],
         tasks: [
             'jshint:wct',
-            'jscs:wct',
+            //'jscs:wct',
             'build-wct'
         ]
     }
