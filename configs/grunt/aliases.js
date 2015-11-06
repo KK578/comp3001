@@ -16,8 +16,8 @@
     lint: {
         description: 'Lints the project to check for Javascript errors and Code Style',
         tasks: [
-            'jshint',
-            'jscs'
+            'jshint'
+            //'jscs'
         ]
     },
     build: {
