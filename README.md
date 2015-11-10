@@ -14,11 +14,37 @@ You will then need to ensure `grunt` is installed globally.
 (sudo) npm install -g grunt-cli
 ```
 
+#### Other Useful Programs
+
+##### Generator-Polynode
+
 If using generator-polynode, follow these steps additionally.
 
 ```bash
 (sudo) npm install -g yo
 (sudo) npm install -g generator-polynode@0.2.0-beta
+```
+
+You can then create new elements for the project using `yo polynode:element`.
+
+```bash
+# Will template new-element as a custom component.
+yo polynode:element new-element
+```
+
+##### Bower
+
+Package manager tool for client side dependencies, used a lot by Polymer Elements.
+
+```bash
+(sudo) npm install -g bower
+```
+
+You can then install additional dependencies to the project with `bower`.
+
+```bash
+# Save if the new component installed becomes a project dependency.
+bower install --save PolymerElements/paper-elements
 ```
 
 ### Installing Project Dependencies
