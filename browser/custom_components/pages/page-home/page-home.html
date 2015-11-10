@@ -10,13 +10,16 @@
 <!-- Other -->
 <link rel="import" href="../../../bower_components/geo-location/geo-location.html">
 <link rel="import" href="../../../bower_components/google-map/google-map.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-marker.html" />
 <link rel="import" href="../../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
 <dom-module id="page-home">
     <link rel="import" type="css" href="page-home.css?__inline" />
     <template>
-        <geo-location></geo-location>
-        <google-map class="fit" latitude="51.5100" longitude="-360.1212"></google-map>
+        <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
+        <google-map class="fit" latitude="51.5100" longitude="-360.1212">
+            <google-map-marker latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
+        </google-map>
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
             <div class="dropdown-content">
