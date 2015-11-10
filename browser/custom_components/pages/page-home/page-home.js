@@ -31,12 +31,7 @@ App.Elements['page-home'] = Polymer({
      *  computed {string}
      *  observer {string}
      */
-    properties: {
-        /*results: {
-            type: Array,
-            value: []
-        }*/
-    },
+    properties: {},
 
     /* Functions specific to this element go under here. */
 
