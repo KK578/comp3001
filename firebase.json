@@ -1,0 +1,16 @@
+{
+  "firebase": "no2pollution",
+  "public": "build/public/",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**/*",
+    "**/test/**/*"
+  ],
+  "rewrites": [
+    {
+      "source": "**",
+      "destination": "/404.html"
+    }
+  ]
+}
