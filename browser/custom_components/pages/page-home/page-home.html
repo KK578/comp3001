@@ -8,18 +8,19 @@
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
+<link rel="import" href="../../../bower_components/geo-location/geo-location.html">
 <link rel="import" href="../../../bower_components/google-map/google-map.html" />
 <link rel="import" href="../../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
 <dom-module id="page-home">
     <link rel="import" type="css" href="page-home.css?__inline" />
     <template>
+        <geo-location></geo-location>
         <google-map class="fit" latitude="51.5100" longitude="-360.1212"></google-map>
-
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
             <div class="dropdown-content">
-                <paper-fab icon="maps:my-location" mini></paper-fab>
+                <paper-fab id="myLocationBtn" icon="maps:my-location" mini></paper-fab>
                 <paper-fab icon="image:nature" mini></paper-fab>
                 <paper-fab icon="maps:directions" mini></paper-fab>
             </div>

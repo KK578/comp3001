@@ -14,7 +14,9 @@ App.Elements['page-home'] = Polymer({
     //behaviors: [],
 
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
-    //listeners: {},
+    listeners: {
+        'myLocationBtn.tap': 'myLocationBtnOnTap',
+    },
 
     /**
      * https://www.polymer-project.org/1.0/docs/devguide/properties.html
@@ -28,7 +30,12 @@ App.Elements['page-home'] = Polymer({
      *  computed {string}
      *  observer {string}
      */
-    properties: {}
+    properties: {},
+
+    myLocationBtnOnTap: function (e) {
+        var loc = document.querySelector('geo-location');
+        alert('Your location is: (' + loc.latitude + ',' + loc.longitude + ')');
+    }
 
     /* Functions specific to this element go under here. */
 });
