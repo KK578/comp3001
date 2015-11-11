@@ -32,10 +32,12 @@ App.Elements['page-home'] = Polymer({
      */
     properties: {},
 
+    /* Functions specific to this element go under here. */
     myLocationBtnOnTap: function (e) {
         var loc = document.querySelector('geo-location');
-        alert('Your location is: (' + loc.latitude + ',' + loc.longitude + ')');
+        var map = document.querySelector('google-map');
+        map.latitude = loc.latitude;
+        map.longitude = loc.longitude;
+        map.zoom = 15;
     }
-
-    /* Functions specific to this element go under here. */
 });
