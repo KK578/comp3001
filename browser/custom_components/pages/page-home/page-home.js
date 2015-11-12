@@ -16,8 +16,9 @@ App.Elements['page-home'] = Polymer({
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
     listeners: {
         'myLocationBtn.tap': 'myLocationBtnOnTap',
-	    'findParkBtn.tap': 'findParkBtnOnTap',
-        'google-map-search-results': 'foundResults'
+	    'findParkBtn.tap': 'findParkBtnOnTap'
+        //'google-map-search-results': 'foundResults',
+        //'api-load': 'onApiLoad'
     },
 
     /**
@@ -35,27 +36,63 @@ App.Elements['page-home'] = Polymer({
     properties: {},
 
     /* Functions specific to this element go under here. */
-    myLocationBtnOnTap: function (e) {
-        var loc = document.querySelector('geo-location');
+    /*onApiLoad: function (e) {
+        console.log("\n API LOADED WOOHOO \n");
+    },*/
+
+    centerMap: function (lat, lng, zoom) {
         var map = document.querySelector('google-map');
-        map.latitude = loc.latitude;
-        map.longitude = loc.longitude;
-        map.zoom = 15;
+        map.latitude = lat;
+        map.longitude = lng;
+        map.zoom = zoom;
     },
 
-    foundResults: function (e) {
+    myLocationBtnOnTap: function (e) {
+        var loc = document.querySelector('geo-location');
+        this.centerMap(loc.latitude,loc.longitude,15);
+    },
+
+    /*foundResults: function (e) {
         var search = document.querySelector('google-map-search');
         var p = search.results[0];
         alert('The nearest park is: ' + p.name + ' (' + p.latitude + ',' + p.longitude + ')');
-    },
+    },*/
 
     findParkBtnOnTap: function (e) {
-        var search = document.querySelector('google-map-search');
+
+        var mapsAPI = document.querySelector('google-maps-api'); //might need to check if api is loaded first
+
+        var loc = document.querySelector('geo-location');
+        var currentLocation = {lat: loc.latitude, lng: loc.longitude};
+
+        var self = this;
+
+        function callback(results, status) {
+          if (status === mapsAPI.api.places.PlacesServiceStatus.OK) {
+            var p = results[0];
+            self.centerMap(p.geometry.location.lat(),p.geometry.location.lng(),15);
+            var parkMarker = document.getElementById('parkMarker');
+            parkMarker.latitude = p.geometry.location.lat();
+            parkMarker.longitude = p.geometry.location.lng();
+            parkMarker.animation = "BOUNCE";
+            alert('The nearest park is: ' + p.name);
+          }
+        }
+
+        var service = new mapsAPI.api.places.PlacesService(document.createElement('div'));
+        service.nearbySearch({
+            location: currentLocation,
+            types: ['park'],
+            radius: parseFloat(1000) //might need to arrange by distance
+        }, callback);
+
+        //OLD WAY USING GOOGLE MAP SEARCH COMPONENT wasnt working with custom location
+        //var search = document.querySelector('google-map-search');
         //search.longitude = parseFloat(51.5072);
         //search.latitude = parseFloat(0.1275);
-        search.radius = parseFloat(1000);
-        search.query = 'park';
-        search.types = 'park';
-        search.search();
+        //search.radius = parseFloat(1000);
+        //search.query = 'park';
+        //search.types = 'park';
+        //search.search();
     }
 });

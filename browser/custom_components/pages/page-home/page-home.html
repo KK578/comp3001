@@ -21,8 +21,9 @@
         <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <google-maps-api api-key="AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw" version="3.exp"></google-maps-api>
         <google-map class="fit" latitude="51.5100" longitude="-360.1212">
-	    <google-map-search map="[[map]]" results="{{results}}"></google-map-search>
-            <google-map-marker latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
+	    <!-- <google-map-search map="[[map]]" results="{{results}}"></google-map-search> -->
+            <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
+            <google-map-marker id="parkMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
         </google-map>
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
