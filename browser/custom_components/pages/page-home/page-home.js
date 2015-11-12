@@ -16,7 +16,7 @@ App.Elements['page-home'] = Polymer({
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
     listeners: {
         'myLocationBtn.tap': 'myLocationBtnOnTap',
-	'findParkBtn.tap': 'findParkBtnOnTap',
+	    'findParkBtn.tap': 'findParkBtnOnTap',
         'google-map-search-results': 'foundResults'
     },
 
