@@ -5,6 +5,7 @@
 <link rel="import" href="../../../bower_components/iron-icons/image-icons.html" />
 <!-- Paper -->
 <link rel="import" href="../../../bower_components/paper-fab/paper-fab.html" />
+<link rel="import" href="../../../bower_components/paper-tooltip/paper-tooltip.html" />
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
@@ -13,6 +14,9 @@
 <link rel="import" href="../../../bower_components/google-map/google-map.html" />
 <link rel="import" href="../../../bower_components/google-map/google-map-search.html" />
 <link rel="import" href="../../../bower_components/google-map/google-map-marker.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-point.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-poly.html" />
+
 <link rel="import" href="../../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
 <dom-module id="page-home">
@@ -24,15 +28,26 @@
         <google-map api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212">
             <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
+            <!--<google-map-poly>
+                <template is="dom-repeat" items="{{path}}">
+                    <google-map-point latitude="{{item.latitude}}" longitude="{{item.longitude}}"></google-map-point>
+                </template>
+            </google-map-poly>-->
         </google-map>
+
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
             <div class="dropdown-content">
                 <paper-fab id="myLocationBtn" icon="maps:my-location" mini></paper-fab>
                 <paper-fab id="findParkBtn" icon="image:nature" mini></paper-fab>
-                <paper-fab icon="maps:directions" mini></paper-fab>
+                <paper-fab id="getDirBtn" icon="maps:directions" mini></paper-fab>
             </div>
         </paper-fab-speed-dial>
+
+        <!-- Tooltip -->
+        <paper-tooltip for="myLocationBtn" position="left">Getting your location</paper-tooltip>
+        <paper-tooltip for="findParkBtn" position="left">Find nearest park</paper-tooltip>
+        <paper-tooltip for="getDirBtn" position="left">Bring me somewhere!</paper-tooltip>
     </template>
     <script src="page-home.js?__inline"></script>
 </dom-module>

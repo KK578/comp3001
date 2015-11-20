@@ -33,6 +33,19 @@ App.Elements['page-home'] = Polymer({
      *  observer {string}
      */
     properties: {
+        path: {
+            type: Array,
+            value: [
+                { latitude: 51.525831, longitude: -0.131919 },
+                { latitude: 51.526185, longitude: -0.132293 },
+                { latitude: 51.525870, longitude: -0.133213 },
+                { latitude: 51.523459, longitude: -0.130765 },
+                { latitude: 51.523325, longitude: -0.130961 },
+                { latitude: 51.523072, longitude: -0.131105 },
+                { latitude: 51.522869, longitude: -0.131550 },
+                { latitude: 51.523187, longitude: -0.131942 }
+            ]
+        },
         apiKey: {
             type: String,
             value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
