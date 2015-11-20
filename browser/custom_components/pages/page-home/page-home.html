@@ -24,8 +24,8 @@
     <template>
         <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <google-maps-api api-key="[[apiKey]]" version="3.exp"></google-maps-api>
+  	    <park-finder api-key="[[apiKey]]"></park-finder>
         <google-map api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212">
-	    <!-- <google-map-search map="[[map]]" results="{{results}}"></google-map-search> -->
             <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
             <!--<google-map-poly>
