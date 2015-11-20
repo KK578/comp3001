@@ -92,7 +92,8 @@ App.Elements['page-home'] = Polymer({
         service.nearbySearch({
             location: currentLocation,
             types: ['park'],
-            radius: parseFloat(1000) //might need to arrange by distance
+            //radius: parseFloat(1000) //might need to arrange by distance
+            rankBy: mapsAPI.api.places.RankBy.DISTANCE
         }, callback);
 
         //OLD WAY USING GOOGLE MAP SEARCH COMPONENT wasnt working with custom location
