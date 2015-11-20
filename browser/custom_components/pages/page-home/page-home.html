@@ -9,37 +9,44 @@
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
-<!-- Other:Maps -->
+<link rel="import" href="../../../bower_components/geo-location/geo-location.html">
+<link rel="import" href="../../../bower_components/google-apis/google-maps-api.html" />
 <link rel="import" href="../../../bower_components/google-map/google-map.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-search.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-marker.html" />
 <link rel="import" href="../../../bower_components/google-map/google-map-point.html" />
 <link rel="import" href="../../../bower_components/google-map/google-map-poly.html" />
 
 <link rel="import" href="../../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
 <dom-module id="page-home">
-    <link rel="import" type="css" href="page-home.scss?__inline" />
+    <link rel="import" type="css" href="page-home.css?__inline" />
     <template>
-        <!--<google-map class="fit" latitude="51.5100" longitude="-360.1212">-->
-        <google-map id="map-canvas" class="fit" latitude="51.524564" longitude="-0.131917" zoom="17">
-            <google-map-poly>
+        <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
+        <google-maps-api api-key="[[apiKey]]" version="3.exp"></google-maps-api>
+        <google-map api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212">
+	    <!-- <google-map-search map="[[map]]" results="{{results}}"></google-map-search> -->
+            <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
+            <google-map-marker id="parkMarker"></google-map-marker>
+            <!--<google-map-poly>
                 <template is="dom-repeat" items="{{path}}">
                     <google-map-point latitude="{{item.latitude}}" longitude="{{item.longitude}}"></google-map-point>
                 </template>
-            </google-map-poly>
+            </google-map-poly>-->
         </google-map>
 
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
             <div class="dropdown-content">
-                <paper-fab id="myLocBtn" icon="maps:my-location" mini></paper-fab>
-                <paper-fab id="getNearParkBtn" icon="image:nature" mini></paper-fab>
+                <paper-fab id="myLocationBtn" icon="maps:my-location" mini></paper-fab>
+                <paper-fab id="findParkBtn" icon="image:nature" mini></paper-fab>
                 <paper-fab id="getDirBtn" icon="maps:directions" mini></paper-fab>
             </div>
         </paper-fab-speed-dial>
 
         <!-- Tooltip -->
-        <paper-tooltip for="myLocBtn" position="left">Getting your location</paper-tooltip>
-        <paper-tooltip for="getNearParkBtn" position="left">Find nearest park</paper-tooltip>
+        <paper-tooltip for="myLocationBtn" position="left">Getting your location</paper-tooltip>
+        <paper-tooltip for="findParkBtn" position="left">Find nearest park</paper-tooltip>
         <paper-tooltip for="getDirBtn" position="left">Bring me somewhere!</paper-tooltip>
     </template>
     <script src="page-home.js?__inline"></script>
