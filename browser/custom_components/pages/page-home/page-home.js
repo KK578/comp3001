@@ -16,7 +16,8 @@ App.Elements['page-home'] = Polymer({
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
     listeners: {
         'myLocationBtn.tap': 'myLocationBtnOnTap',
-        'findParkBtn.tap': 'findParkBtnOnTap'
+        'findParkBtn.tap': 'findParkBtnOnTap',
+        'getDirBtn.tap': 'getDirBtnOnTap'
         //'google-map-search-results': 'foundResults',
         //'api-load': 'onApiLoad'
     },
@@ -38,7 +39,9 @@ App.Elements['page-home'] = Polymer({
             type: String,
             value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
             readOnly: true
-        }
+        },
+        criteria: "",
+        srchInput: ""
     },
 
     /* Functions specific to this element go under here. */
@@ -104,5 +107,27 @@ App.Elements['page-home'] = Polymer({
         //search.query = 'park';
         //search.types = 'park';
         //search.search();
+    },
+
+    getDirBtnOnTap: function(e) {
+        var srch_dialog = document.getElementById("search-dialog");
+        if(srch_dialog){
+            srch_dialog.open();
+            document.getElementById("search-input-text").$.input.focus();
+        }
+    },
+
+    srchReqOnEnter: function(e){
+        //check if 'enter' was pressed
+        if(e.keyCode === 13){
+            //enter
+
+            this.set('criteria', this.srchInput);
+            this.set('srchInput', '');
+            var srch_dialog = document.getElementById("search-dialog");
+            if(srch_dialog){
+                srch_dialog.close();
+            }
+        }
     }
 });

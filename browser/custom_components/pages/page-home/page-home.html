@@ -5,6 +5,8 @@
 <link rel="import" href="../../../bower_components/iron-icons/image-icons.html" />
 <!-- Paper -->
 <link rel="import" href="../../../bower_components/paper-fab/paper-fab.html" />
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html" />
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html" />
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
@@ -20,7 +22,8 @@
     <template>
         <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <google-maps-api api-key="[[apiKey]]" version="3.exp"></google-maps-api>
-        <google-map api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212">
+        <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}" radius="27820"></google-map-search>
+        <google-map map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212">
 	    <!-- <google-map-search map="[[map]]" results="{{results}}"></google-map-search> -->
             <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
@@ -30,9 +33,14 @@
             <div class="dropdown-content">
                 <paper-fab id="myLocationBtn" icon="maps:my-location" mini></paper-fab>
                 <paper-fab id="findParkBtn" icon="image:nature" mini></paper-fab>
-                <paper-fab icon="maps:directions" mini></paper-fab>
+                <paper-fab id="getDirBtn" icon="maps:directions" mini></paper-fab>
             </div>
         </paper-fab-speed-dial>
+
+        <!-- Search Dialog -->
+        <paper-dialog id="search-dialog" class="search-dialog-pos">
+            <paper-input id="search-input-text" label="Search" on-keydown="srchReqOnEnter" value="{{srchInput}}"></paper-input>
+        </paper-dialog>
     </template>
     <script src="page-home.js?__inline"></script>
 </dom-module>

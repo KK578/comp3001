@@ -22,29 +22,29 @@
 <dom-module id="screen-main">
     <link rel="import" type="css" href="screen-main.css?__inline" />
     <template>
-        <paper-drawer-panel id="drawer-container" force-narrow>
+        <!--<paper-drawer-panel id="drawer-container" force-narrow>-->
             <!-- Navigation Drawer -->
-            <paper-header-panel drawer>
-                <paper-toolbar>
-                    <div id="drawer-toolbar">
-                        <h2>Navigation</h2>
-                    </div>
-                </paper-toolbar>
+            <!--<paper-header-panel drawer>-->
+                <!--<paper-toolbar>-->
+                    <!--<div id="drawer-toolbar">-->
+                        <!--<h2>Navigation</h2>-->
+                    <!--</div>-->
+                <!--</paper-toolbar>-->
 
-                <!-- Page Navigation Items -->
-                <iron-selector selected="{{_selectedPage}}">
-                    <template is="dom-repeat" items="{{pages}}">
-                        <paper-item class="navigation-item" on-tap="changePage">
-                            <paper-ripple></paper-ripple>
-                            <span>{{item.title}}</span>
-                        </paper-item>
-                    </template>
-                </iron-selector>
-            </paper-header-panel>
+                <!--&lt;!&ndash; Page Navigation Items &ndash;&gt;-->
+                <!--<iron-selector selected="{{_selectedPage}}">-->
+                    <!--<template is="dom-repeat" items="{{pages}}">-->
+                        <!--<paper-item class="navigation-item" on-tap="changePage">-->
+                            <!--<paper-ripple></paper-ripple>-->
+                            <!--<span>{{item.title}}</span>-->
+                        <!--</paper-item>-->
+                    <!--</template>-->
+                <!--</iron-selector>-->
+            <!--</paper-header-panel>-->
 
             <!-- Content -->
             <routed-pages class="fit" main></routed-pages>
-        </paper-drawer-panel>
+        <!--</paper-drawer-panel>-->
     </template>
     <script src="screen-main.js?__inline"></script>
 </dom-module>

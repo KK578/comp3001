@@ -11,3 +11,12 @@ paper-fab-speed-dial {
     top: 12px;
     right: 12px;
 }
+
+paper-doalog.search-dialog-pos {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 100%;
+    height: 100px;
+    overflow: auto;
+}
