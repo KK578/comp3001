@@ -62,8 +62,20 @@ App.Elements['page-home'] = Polymer({
     },
 
     myLocationBtnOnTap: function (e) {
+        var myLocationMarker = document.getElementById('myLocationMarker');
         var loc = document.querySelector('geo-location');
         this.centerMap(loc.latitude, loc.longitude, 15);
+        var radius = loc.position.coords.accuracy;
+        alert("loc accuracy: "+radius);
+
+        console.log("beforeC");
+
+        var circle = document.querySelector('map-circle');
+        console.log("middleC");
+        circle.setCircle(myLocationMarker,radius);
+
+        console.log("afterC");
+
     },
 
     findParkBtnOnTap: function (e) {
