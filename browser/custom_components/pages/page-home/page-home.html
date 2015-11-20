@@ -3,6 +3,7 @@
 <!-- Iron -->
 <link rel="import" href="../../../bower_components/iron-icons/maps-icons.html" />
 <link rel="import" href="../../../bower_components/iron-icons/image-icons.html" />
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html" />
 <!-- Paper -->
 <link rel="import" href="../../../bower_components/paper-fab/paper-fab.html" />
 <!-- Neon -->
@@ -18,11 +19,13 @@
 <dom-module id="page-home">
     <link rel="import" type="css" href="page-home.css?__inline" />
     <template>
+        <iron-ajax id="ajax" url="http://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
+
         <!--<google-map class="fit" latitude="51.5100" longitude="-360.1212">-->
         <google-map id="map-canvas" class="fit" latitude="51.524564" longitude="-0.131917" zoom="17">
             <google-map-poly>
                 <template is="dom-repeat" items="{{path}}">
-                    <google-map-point latitude="{{item.latitude}}" longitude="{{item.longitude}}"></google-map-point>
+                    <google-map-point latitude="{{item.lat}}" longitude="{{item.lng}}"></google-map-point>
                 </template>
             </google-map-poly>
         </google-map>
