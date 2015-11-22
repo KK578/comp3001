@@ -41,7 +41,8 @@ App.Elements['page-home'] = Polymer({
             readOnly: true
         },
         criteria: "",
-        srchInput: ""
+        srchInput: "",
+        results: ""
     },
 
     /* Functions specific to this element go under here. */
@@ -113,7 +114,6 @@ App.Elements['page-home'] = Polymer({
         var srch_dialog = document.getElementById("search-dialog");
         if(srch_dialog){
             srch_dialog.open();
-            document.getElementById("search-input-text").$.input.focus();
         }
     },
 
@@ -121,7 +121,6 @@ App.Elements['page-home'] = Polymer({
         //check if 'enter' was pressed
         if(e.keyCode === 13){
             //enter
-
             this.set('criteria', this.srchInput);
             this.set('srchInput', '');
             var srch_dialog = document.getElementById("search-dialog");
@@ -129,5 +128,41 @@ App.Elements['page-home'] = Polymer({
                 srch_dialog.close();
             }
         }
+    },
+
+    routeBtnOnTap: function(e){
+        console.log("ajax to backend...");
+    },
+
+    on_api_load: function () {
+        var mapsAPI = document.querySelector('google-maps-api');
+        var map = document.querySelector("google-map");
+        var autocomplete = new mapsAPI.api.places.Autocomplete(document.getElementById("search-input-text").$.input);
+        autocomplete.bindTo('bounds', map);
+        var infowindow = new mapsAPI.api.InfoWindow();
+        var marker = new mapsAPI.api.Marker({
+            map: map.map,
+            anchorPoint: new mapsAPI.api.Point(0, -29)
+        });
+
+        autocomplete.addListener('place_changed', function() {
+            this.set('results', '');
+            infowindow.close();
+            marker.setVisible(false);
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                console.log(place);
+                return;
+            }
+
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+                map.map.fitBounds(place.geometry.viewport);
+            } else {
+                map.map.setCenter(place.geometry.location);
+                map.map.setZoom(17);  // Why 17? Because it looks good.
+            }
+
+        });
     }
 });
