@@ -45,30 +45,26 @@ App.Elements['page-home'] = Polymer({
         var ajax = this.$.ajax;
 
         ajax.params = {
-            start: 'n10lz',
-            destination: 'n87ng'
+            start: 'W1T4QB',
+            destination: 'WC1E6BT'
         };
 
-        console.log(ajax.requestUrl);
         ajax.generateRequest();
     },
     ajaxResponse: function (e) {
         var detail = e.detail;
-        console.log(detail);
-
-        // DEBUG: Until backend is finalised.
-        var encodedPolyline = 'whqyH|{TJf@LRNLdB`@JJ@fDA?A?A?CBEHADg@?_AAoCMyNi@aBEMD?AAAC?C@EGA@CACC?AeBv@g@TeBfAwFlDoAz@e@ZQRi@j@sB`C}@pA[n@}@dDEV?N_B?eCEcBAg@?\nCICW@_AAoEAkCBeFCaDCsBAuDOc@Ie@SOe@YoA@g@o@}AsAyC_AwDcCeKyBbB}BfBg@f@eB`B}AfB{@~@aFpFwI|ImAhAmBvByCzCoEpE}DpD{DhDkBbB]^g@d@c@Tc@J}@Dq@B_BPwA\\m@V_@TiAl@oAz@]\\y@nA{@dBcArBmAhAy@ZWFgAPU@YEcAa@i@UgBu@iDsBeA{@{CyC}DeEaAUq@GgBMIHi@FWA[HoA`@UYy@a@gDMSEuBGS@oDM}Ca@s@Uq@Yw@k@wBkAaAaAs@]q@QeAOg@GU@?@?@ABADEBA@KlBBhBJpAaB\\w@Ao@Gs@Yw@e@oCs@G`@GtBEpE';
+        var encodedPath = detail.response.polyline;
 
         var mapAPI = this.$['map-canvas'].$.api.api;
+        var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
 
-        var fromBackend = mapAPI.geometry.encoding.decodePath(encodedPolyline);
-
-        for (var i = 0; i < fromBackend.length; i++) {
-            fromBackend[i].lat = fromBackend[i].lat();
-            fromBackend[i].lng = fromBackend[i].lng();
+        // HACK: Item in template repeat does not seem to be able to access functions at bind
+        for (var i = 0; i < decodedPath.length; i++) {
+            decodedPath[i].lat = decodedPath[i].lat();
+            decodedPath[i].lng = decodedPath[i].lng();
         }
 
-        this.set('path', fromBackend);
+        this.path = decodedPath;
     },
     ajaxError: function (e) {
         var detail = e.detail;
@@ -77,9 +73,6 @@ App.Elements['page-home'] = Polymer({
         this.fire('toast-message', {
             message: 'Sorry, an error occurred while requesting a route.'
         });
-
-        // DEBUG: Until Backend is finalised.
-        this.ajaxResponse(e);
     }
 });
 
