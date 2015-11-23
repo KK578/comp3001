@@ -13,6 +13,7 @@
     "polymer": "Polymer/Polymer#1.2.3",
     "paper-elements": "PolymerElements/paper-elements#1.0.6",
     "paper-fab-transitions": "gabiaxel/paper-fab-transitions#0.1.0",
+    "iron-ajax": "PolymerElements/iron-ajax#1.1.1",
     "google-apis": "GoogleWebComponents/google-apis#1.1.3",
     "google-map": "GoogleWebComponents/google-map#1.1.7",
     "geo-location": "ebidel/geo-location#1.0.1"
