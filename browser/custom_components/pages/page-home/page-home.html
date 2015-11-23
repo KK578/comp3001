@@ -23,7 +23,7 @@
 <dom-module id="page-home">
     <link rel="import" type="css" href="page-home.css?__inline" />
     <template>
-        <iron-ajax id="ajax" url="http://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
+        <iron-ajax id="ajax" url="https://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
 
         <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <google-maps-api api-key="[[apiKey]]" version="3.exp"></google-maps-api>
