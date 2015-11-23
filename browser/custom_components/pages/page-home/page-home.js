@@ -16,9 +16,10 @@ App.Elements['page-home'] = Polymer({
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
     listeners: {
         'myLocationBtn.tap': 'myLocationBtnOnTap',
-        'findParkBtn.tap': 'findParkBtnOnTap'
-        //'google-map-search-results': 'foundResults',
-        //'api-load': 'onApiLoad'
+        'findParkBtn.tap': 'findParkBtnOnTap',
+        'getDirBtn.tap':'getDirBtnOnTap',
+        'ajax.response': 'ajaxResponse',
+        'ajax.error': 'ajaxError'
     },
 
     /**
@@ -34,19 +35,6 @@ App.Elements['page-home'] = Polymer({
      *  observer {string}
      */
     properties: {
-        path: {
-            type: Array,
-            value: [
-                { latitude: 51.525831, longitude: -0.131919 },
-                { latitude: 51.526185, longitude: -0.132293 },
-                { latitude: 51.525870, longitude: -0.133213 },
-                { latitude: 51.523459, longitude: -0.130765 },
-                { latitude: 51.523325, longitude: -0.130961 },
-                { latitude: 51.523072, longitude: -0.131105 },
-                { latitude: 51.522869, longitude: -0.131550 },
-                { latitude: 51.523187, longitude: -0.131942 }
-            ]
-        },
         apiKey: {
             type: String,
             value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
@@ -116,5 +104,40 @@ App.Elements['page-home'] = Polymer({
         //search.query = 'park';
         //search.types = 'park';
         //search.search();
+    },
+
+    getDirBtnOnTap: function (e) {
+        var ajax = this.$.ajax;
+
+        ajax.params = {
+            start: 'N10LZ',
+            destination: 'N87NG'
+        };
+
+        ajax.generateRequest();
+    },
+    ajaxResponse: function (e) {
+        var detail = e.detail;
+        var encodedPath = detail.response.polyline;
+
+        var mapAPI = this.$['map-canvas'].$.api.api;
+        var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
+
+        // HACK: Item in template repeat does not seem to be able to access functions at bind
+        for (var i = 0; i < decodedPath.length; i++) {
+            decodedPath[i].lat = decodedPath[i].lat();
+            decodedPath[i].lng = decodedPath[i].lng();
+        }
+
+        this.path = decodedPath;
+    },
+    ajaxError: function (e) {
+        var detail = e.detail;
+        console.log(detail);
+
+        this.fire('toast-message', {
+            message: 'Sorry, an error occurred while requesting a route.'
+        });
     }
 });
+
