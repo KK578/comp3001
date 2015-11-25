@@ -23,20 +23,24 @@
         <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <google-maps-api api-key="[[apiKey]]" version="3.exp" on-api-load="on_api_load"></google-maps-api>
         <!--<google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}" radius="27820"></google-map-search>-->
-        <google-map map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212">
-	    <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}"></google-map-search>
+        <google-map map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" mouse-events>
+            <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}"></google-map-search>
             <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
+
             <template is="dom-repeat" items="{{results}}" as="marker">
-                <google-map-marker latitude="{{marker.latitude}}"
-                                   longitude="{{marker.longitude}}">
+                <google-map-marker latitude="{{marker.latitude}}" longitude="{{marker.longitude}}">
                     <h2>{{marker.name}}</h2>
                     <span>{{marker.formatted_address}}</span>
                     <div layout vertical center>
-                        <paper-button name="each-btn" class="colorful" on-tap="routeBtnOnTap" data-args="{{marker.latitude}},{{marker.longitude}}">Route me</paper-button>
+                        <!-- This is a horrendous hackaround caused by google-map#235 -->
+                        <paper-button class="colorful" onclick="document.querySelector('page-home').routeBtnOnTap(this)" location$="{{marker}}">Route me</paper-button>
                     </div>
                 </google-map-marker>
+                <!--<paper-button id="keeek" class="colorful" on-tap="routeBtnOnTap">Route me</paper-button>-->
             </template>
+
+            <!--<paper-button id="keeek" class="colorful" on-tap="routeBtnOnTap">Route me</paper-button>-->
         </google-map>
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>

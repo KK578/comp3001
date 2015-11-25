@@ -110,28 +110,34 @@ App.Elements['page-home'] = Polymer({
         //search.search();
     },
 
-    getDirBtnOnTap: function(e) {
+    getDirBtnOnTap: function (e) {
         var srch_dialog = document.getElementById("search-dialog");
-        if(srch_dialog){
+        if (srch_dialog) {
             srch_dialog.open();
         }
     },
 
-    srchReqOnEnter: function(e){
+    srchReqOnEnter: function (e) {
         //check if 'enter' was pressed
-        if(e.keyCode === 13){
-            //enter
+        if (e.keyCode === 13) {
+            // Empty results array before continuing to ensure all google-map-markers
+            // are correctly detached before
+            this.results = [];
+
             this.set('criteria', this.srchInput);
             this.set('srchInput', '');
             var srch_dialog = document.getElementById("search-dialog");
-            if(srch_dialog){
+            if (srch_dialog) {
                 srch_dialog.close();
             }
         }
     },
 
-    routeBtnOnTap: function(e){
-        console.log("ajax to backend...");
+    routeBtnOnTap: function (sender) {
+        var location = JSON.parse(sender.getAttribute('location'));
+        // Backend currently uses postcode location to do routing.
+        var postcode = location.formatted_address.match(/([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)/)[0];
+        console.log(postcode);
     },
 
     on_api_load: function () {
@@ -145,7 +151,7 @@ App.Elements['page-home'] = Polymer({
             anchorPoint: new mapsAPI.api.Point(0, -29)
         });
 
-        autocomplete.addListener('place_changed', function() {
+        autocomplete.addListener('place_changed', function () {
             this.set('results', '');
             infowindow.close();
             marker.setVisible(false);
