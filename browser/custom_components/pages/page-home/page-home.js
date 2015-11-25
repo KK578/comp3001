@@ -135,9 +135,29 @@ App.Elements['page-home'] = Polymer({
 
     routeBtnOnTap: function (sender) {
         var location = JSON.parse(sender.getAttribute('location'));
+        var postcodeRegex = /([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)/;
         // Backend currently uses postcode location to do routing.
-        var postcode = location.formatted_address.match(/([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)/)[0];
-        console.log(postcode);
+        var postcode = location.formatted_address.match(postcodeRegex)[0];
+
+        var currentLocation = {
+            location: {
+                lat: this.userLatitude,
+                lng: this.userLongitude
+            }
+        };
+
+        var mapsAPI = document.querySelector('google-maps-api');
+        var geocoder = new mapsAPI.api.Geocoder();
+
+        geocoder.geocode(currentLocation, function (results) {
+            var currentPostcode = results[0].formatted_address.match(postcodeRegex)[0];
+
+            postcode = postcode.replace(' ', '');
+            currentPostcode = currentPostcode.replace(' ', '');
+            this.fire('toast-message', {
+                message: 'Going from ' + currentPostcode + ' to ' + postcode + '.'
+            });
+        }.bind(this));
     },
 
     on_api_load: function () {
