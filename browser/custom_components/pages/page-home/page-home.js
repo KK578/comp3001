@@ -17,9 +17,9 @@ App.Elements['page-home'] = Polymer({
     listeners: {
         'myLocationBtn.tap': 'myLocationBtnOnTap',
         'findParkBtn.tap': 'findParkBtnOnTap',
-        'getDirBtn.tap': 'getDirBtnOnTap'
-        //'google-map-search-results': 'foundResults',
-        //'api-load': 'onApiLoad'
+        'getDirBtn.tap':'getDirBtnOnTap',
+        'ajax.response': 'ajaxResponse',
+        'ajax.error': 'ajaxError'
     },
 
     /**
@@ -39,7 +39,7 @@ App.Elements['page-home'] = Polymer({
             type: String,
             value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
             readOnly: true
-        },
+    },
         criteria: "",
         srchInput: "",
         results: ""
@@ -161,6 +161,7 @@ App.Elements['page-home'] = Polymer({
 
             postcode = postcode.replace(' ', '');
             currentPostcode = currentPostcode.replace(' ', '');
+            this.sendRequest(currentPostcode, postcode);
             this.fire('toast-message', {
                 message: 'Going from ' + currentPostcode + ' to ' + postcode + '.'
             });
@@ -197,5 +198,40 @@ App.Elements['page-home'] = Polymer({
             }
 
         });
+    },
+
+    sendRequest: function (start, destination) {
+        var ajax = this.$.ajax;
+
+        ajax.params = {
+            start: start,
+            destination: destination
+        };
+
+        ajax.generateRequest();
+    },
+    ajaxResponse: function (e) {
+        var detail = e.detail;
+        var encodedPath = detail.response.polyline;
+
+        var mapAPI = this.$['map-canvas'].$.api.api;
+        var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
+
+        // HACK: Item in template repeat does not seem to be able to access functions at bind
+        for (var i = 0; i < decodedPath.length; i++) {
+            decodedPath[i].lat = decodedPath[i].lat();
+            decodedPath[i].lng = decodedPath[i].lng();
+        }
+
+        this.path = decodedPath;
+    },
+    ajaxError: function (e) {
+        var detail = e.detail;
+        console.log(detail);
+
+        this.fire('toast-message', {
+            message: 'Sorry, an error occurred while requesting a route.'
+        });
     }
 });
+

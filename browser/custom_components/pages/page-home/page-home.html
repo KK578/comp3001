@@ -3,10 +3,12 @@
 <!-- Iron -->
 <link rel="import" href="../../../bower_components/iron-icons/maps-icons.html" />
 <link rel="import" href="../../../bower_components/iron-icons/image-icons.html" />
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html" />
 <!-- Paper -->
 <link rel="import" href="../../../bower_components/paper-fab/paper-fab.html" />
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html" />
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html" />
+<link rel="import" href="../../../bower_components/paper-tooltip/paper-tooltip.html" />
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
@@ -15,15 +17,20 @@
 <link rel="import" href="../../../bower_components/google-map/google-map.html" />
 <link rel="import" href="../../../bower_components/google-map/google-map-search.html" />
 <link rel="import" href="../../../bower_components/google-map/google-map-marker.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-point.html" />
+<link rel="import" href="../../../bower_components/google-map/google-map-poly.html" />
+
 <link rel="import" href="../../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
 <dom-module id="page-home">
     <link rel="import" type="css" href="page-home.css?__inline" />
     <template>
+        <iron-ajax id="ajax" url="https://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
+
         <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <google-maps-api api-key="[[apiKey]]" version="3.exp" on-api-load="on_api_load"></google-maps-api>
-        <!--<google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}" radius="27820"></google-map-search>-->
-        <google-map map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" mouse-events>
+        
+        <google-map id="map-canvas" map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" mouse-events>
             <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}"></google-map-search>
             <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
@@ -37,11 +44,15 @@
                         <paper-button class="colorful" onclick="document.querySelector('page-home').routeBtnOnTap(this)" location$="{{marker}}">Route me</paper-button>
                     </div>
                 </google-map-marker>
-                <!--<paper-button id="keeek" class="colorful" on-tap="routeBtnOnTap">Route me</paper-button>-->
             </template>
 
-            <!--<paper-button id="keeek" class="colorful" on-tap="routeBtnOnTap">Route me</paper-button>-->
+            <google-map-poly>
+                <template is="dom-repeat" items="{{path}}">
+                    <google-map-point latitude="{{item.lat}}" longitude="{{item.lng}}"></google-map-point>
+                </template>
+            </google-map-poly>
         </google-map>
+
         <paper-fab-speed-dial>
             <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
             <div class="dropdown-content">
@@ -55,6 +66,11 @@
         <paper-dialog id="search-dialog" class="search-dialog-pos">
             <paper-input id="search-input-text" label="Search" on-keydown="srchReqOnEnter" value="{{srchInput}}" autofocus="true"></paper-input>
         </paper-dialog>
+
+        <!-- Tooltip -->
+        <paper-tooltip for="myLocationBtn" position="left">Getting your location</paper-tooltip>
+        <paper-tooltip for="findParkBtn" position="left">Find nearest park</paper-tooltip>
+        <paper-tooltip for="getDirBtn" position="left">Bring me somewhere!</paper-tooltip>
     </template>
     <script src="page-home.js?__inline"></script>
 </dom-module>
