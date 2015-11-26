@@ -139,6 +139,9 @@ App.Elements['page-home'] = Polymer({
         // Backend currently uses postcode location to do routing.
         var postcode = location.formatted_address.match(postcodeRegex)[0];
 
+        var mapsAPI = document.querySelector('google-maps-api');
+        var geocoder = new mapsAPI.api.Geocoder();
+
         var currentLocation = {
             location: {
                 lat: this.userLatitude,
@@ -146,11 +149,15 @@ App.Elements['page-home'] = Polymer({
             }
         };
 
-        var mapsAPI = document.querySelector('google-maps-api');
-        var geocoder = new mapsAPI.api.Geocoder();
-
         geocoder.geocode(currentLocation, function (results) {
-            var currentPostcode = results[0].formatted_address.match(postcodeRegex)[0];
+            var currentPostcode = '';
+            for (var i = 0; i < results.length; i++) {
+                var match = results[i].formatted_address.match(postcodeRegex);
+                if (match) {
+                    currentPostcode = match[0];
+                    break;
+                }
+            }
 
             postcode = postcode.replace(' ', '');
             currentPostcode = currentPostcode.replace(' ', '');
