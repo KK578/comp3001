@@ -4,8 +4,12 @@ describe('<park-finder>', function () {
     var element;
     var data;
 
-    before(function () {
+    before(function (done) {
         element = document.querySelector('park-finder');
+
+        if (element.$.api.libraryLoaded) {
+            done();
+        }
     });
 
     it('should fire "park-found" on calling findPark', function (done) {
