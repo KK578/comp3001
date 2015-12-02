@@ -61,21 +61,21 @@ App.Elements['page-home'] = Polymer({
         map.zoom = zoom;
     },
 
-    myLocationBtnOnTap: function (e) {
+    setAccuracyCircle: function () {
         var myLocationMarker = document.getElementById('myLocationMarker');
         var loc = document.querySelector('geo-location');
-        this.centerMap(loc.latitude, loc.longitude, 15);
         var radius = loc.position.coords.accuracy;
-        alert("loc accuracy: "+radius);
 
-        console.log("beforeC");
+        console.log("Location Accuracy: " + radius);
 
         var circle = document.querySelector('map-circle');
-        console.log("middleC");
-        circle.setCircle(myLocationMarker,radius);
+        circle.setCircle(myLocationMarker.marker, radius);
+    },
 
-        console.log("afterC");
-
+    myLocationBtnOnTap: function (e) {
+        var loc = document.querySelector('geo-location');
+        this.centerMap(loc.latitude, loc.longitude, 15);
+        this.setAccuracyCircle();
     },
 
     findParkBtnOnTap: function (e) {
