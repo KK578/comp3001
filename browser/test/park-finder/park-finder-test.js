@@ -17,13 +17,17 @@ describe('<park-finder>', function () {
         }
 
         window.addEventListener('park-found', listener);
-        element.findPark(51.52306998750526, -0.13208656690626874);
+        element.findPark({
+            lat: 51.52306998750526,
+            lng: -0.13208656690626874
+        });
     });
 
-    it('should find "The Phoenix Garden" near UCL', function () {
-        var epsilon = 0.0001;
-        (Math.abs(data.latitude - 51.514444) < epsilon).should.equal(true);
-        (Math.abs(data.longitude - (-0.128488)) < epsilon).should.equal(true);
-        data.name.should.equal('The Phoenix Garden');
+    it('should find "Gordon Square Garden" near UCL', function () {
+        var epsilon = 0.001;
+        var location = data.geometry.location;
+        (Math.abs(location.lat() - 51.524302) < epsilon).should.equal(true);
+        (Math.abs(location.lng() - (-0.130912)) < epsilon).should.equal(true);
+        data.name.should.equal('Gordon Square Garden');
     });
 });

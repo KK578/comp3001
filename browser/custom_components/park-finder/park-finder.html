@@ -5,9 +5,12 @@
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
+<link rel="import" href="../../bower_components/google-apis/google-maps-api.html" />
 
 <dom-module id="park-finder">
     <link rel="import" type="css" href="park-finder.css?__inline" />
-    <template></template>
+    <template>
+        <google-maps-api id="api" api-key="[[apiKey]]"></google-maps-api>
+    </template>
     <script src="park-finder.js?__inline"></script>
 </dom-module>

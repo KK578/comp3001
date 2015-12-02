@@ -29,12 +29,16 @@ App.Elements['park-finder'] = Polymer({
      *  observer {string}
      */
     properties: {
-      apiKey: String,
+        apiKey: {
+            type: String,
+            value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
+            readOnly: true
+        }
     },
 
     /* Functions specific to this element go under here. */
     findPark: function(currentLocation) {
-        var mapsAPI = document.querySelector('google-maps-api');
+        var mapsAPI = this.$.api;
         var service = new mapsAPI.api.places.PlacesService(document.createElement('div'));
 
         service.nearbySearch({
