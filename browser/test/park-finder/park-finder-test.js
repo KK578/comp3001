@@ -8,7 +8,7 @@ describe('<park-finder>', function () {
         element = document.querySelector('park-finder');
     });
 
-    it('should fire "park-found" on calling findPark', function (done) {
+    it.skip('should fire "park-found" on calling findPark', function (done) {
         function listener(event) {
             data = event.detail;
 
@@ -20,7 +20,7 @@ describe('<park-finder>', function () {
         element.findPark(51.52306998750526, -0.13208656690626874);
     });
 
-    it('should find "The Phoenix Garden" near UCL', function () {
+    it.skip('should find "The Phoenix Garden" near UCL', function () {
         var epsilon = 0.0001;
         (Math.abs(data.latitude - 51.514444) < epsilon).should.equal(true);
         (Math.abs(data.longitude - (-0.128488)) < epsilon).should.equal(true);
