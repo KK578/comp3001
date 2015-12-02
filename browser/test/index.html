@@ -5,6 +5,23 @@
     <meta charset="utf-8" />
 
     <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script>
+        WCT = {
+            environmentScripts: [
+                'stacky/lib/parsing.js',
+                'stacky/lib/formatting.js',
+                'stacky/lib/normalization.js',
+                'async/lib/async.js',
+                'lodash/lodash.js',
+                'mocha/mocha.js',
+                'chai/chai.js',
+                'sinonjs/sinon.js',
+                'sinon-chai/lib/sinon-chai.js',
+                'accessibility-developer-tools/dist/js/axs_testing.js',
+                '../scripts/app.js'
+            ]
+        };
+    </script>
     <script src="../bower_components/web-component-tester/browser.js"></script>
 </head>
 <body>
