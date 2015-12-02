@@ -7,9 +7,12 @@ describe('<park-finder>', function () {
     before(function (done) {
         element = document.querySelector('park-finder');
 
-        if (element.$.api.libraryLoaded) {
-            done();
-        }
+        var handle = window.setInterval(function () {
+            if (element.$.api.libraryLoaded) {
+                done();
+                window.clearInterval(handle);
+            }
+        }, 100);
     });
 
     it('should fire "park-found" on calling findPark', function (done) {
