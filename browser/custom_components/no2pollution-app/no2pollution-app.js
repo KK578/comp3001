@@ -54,21 +54,9 @@ App.Elements['no2pollution-app'] = Polymer({
         map.zoom = zoom;
     },
 
-    setAccuracyCircle: function () {
-        var myLocationMarker = document.getElementById('myLocationMarker');
-        var loc = document.querySelector('geo-location');
-        var radius = loc.position.coords.accuracy;
-
-        console.log("Location Accuracy: " + radius);
-
-        var circle = document.querySelector('map-circle');
-        circle.setCircle(myLocationMarker.marker, radius);
-    },
-
     myLocationBtnOnTap: function (e) {
         var loc = document.querySelector('geo-location');
         this.centerMap(loc.latitude, loc.longitude, 15);
-        this.setAccuracyCircle();
     },
 
     findParkBtnOnTap: function (e) {
