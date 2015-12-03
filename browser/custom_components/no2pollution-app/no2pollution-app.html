@@ -28,15 +28,15 @@
     <template>
         <iron-ajax id="ajax" url="https://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
 
-        <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
+        <geo-location watch-pos high-accuracy position="{{userPosition}}" latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <google-maps-api api-key="[[apiKey]]" version="3.exp" on-api-load="on_api_load"></google-maps-api>
         <park-finder api-key="[[apiKey]]"></park-finder>
-        
+
         <google-map id="map-canvas" map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" mouse-events>
             <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}"></google-map-search>
-            <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
+            <google-map-marker id="myLocationMarker" marker="{{userLocationMarker}}" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
-            <map-circle></map-circle>
+            <map-circle position="[[userPosition]]" marker="[[userLocationMarker]]"></map-circle>
 
             <template is="dom-repeat" items="{{results}}" as="marker">
                 <google-map-marker latitude="{{marker.latitude}}" longitude="{{marker.longitude}}">

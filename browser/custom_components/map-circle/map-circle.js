@@ -4,24 +4,51 @@ App.Elements['map-circle'] = Polymer({
     properties: {
 
         map: {
-            type: Object
+            type: Object,
+            observer: '_changeDetected'
+        },
+
+        position: {
+            type: Object,
+            value: null,
+            notify: true,
+            observer: '_changeDetected'
+        },
+
+        marker: {
+            type: Object,
+            value: null,
+            notify: true
+        },
+
+        circle: {
+            type: Object,
+            value: null
         }
 
     },
 
     /* Functions specific to this element go under here. */
-    setCircle: function (marker, radius) {
+    _changeDetected: function() {
         var mapsAPI = document.querySelector('google-maps-api');
 
-        // Add circle overlay and bind to marker
-        var circle = new mapsAPI.api.Circle({
+        if (this.position && this.marker && this.map && this.map instanceof mapsAPI.api.Map) {
+            this._mapReady();
+        }
+    },
+
+    _mapReady: function() {
+        var mapsAPI = document.querySelector('google-maps-api');
+
+        var radius = this.position.coords.accuracy;
+
+        this.circle = new mapsAPI.api.Circle({
             map: this.map,
             radius: radius,
             fillColor: 'blue',
             strokeColor: 'blue'
         });
 
-        circle.bindTo('center', marker, 'position');
+        this.circle.bindTo('center', this.marker, 'position');
     }
-
 });
