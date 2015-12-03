@@ -1,5 +1,5 @@
-App.Elements['page-home'] = Polymer({
-    is: 'page-home',
+App.Elements['no2pollution-app'] = Polymer({
+    is: 'no2pollution-app',
 
     /* Lifecycle Callbacks: https://www.polymer-project.org/1.0/docs/devguide/registering-elements.html
      * Note that the order that all elements are ready may not be reliable.
