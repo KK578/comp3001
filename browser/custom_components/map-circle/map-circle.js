@@ -38,10 +38,14 @@ App.Elements['map-circle'] = Polymer({
     },
 
     _mapReady: function() {
+        console.log("MAP READY");
         var mapsAPI = document.querySelector('google-maps-api');
 
         var radius = this.position.coords.accuracy;
 
+        if (this.circle) {
+            this.circle.setMap(null);
+        }
         this.circle = new mapsAPI.api.Circle({
             map: this.map,
             radius: radius,
