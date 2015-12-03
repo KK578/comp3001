@@ -1,6 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html" />
 
 <!-- Iron -->
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html" />
 <link rel="import" href="../../../bower_components/iron-icons/maps-icons.html" />
 <link rel="import" href="../../../bower_components/iron-icons/image-icons.html" />
 <link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html" />
@@ -22,8 +23,8 @@
 
 <link rel="import" href="../../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
-<dom-module id="page-home">
-    <link rel="import" type="css" href="page-home.css?__inline" />
+<dom-module id="no2pollution-app">
+    <link rel="import" type="css" href="no2pollution-app.css?__inline" />
     <template>
         <iron-ajax id="ajax" url="https://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
 
@@ -74,5 +75,5 @@
         <paper-tooltip for="findParkBtn" position="left">Find nearest park</paper-tooltip>
         <paper-tooltip for="getDirBtn" position="left">Bring me somewhere!</paper-tooltip>
     </template>
-    <script src="page-home.js?__inline"></script>
+    <script src="no2pollution-app.js?__inline"></script>
 </dom-module>
