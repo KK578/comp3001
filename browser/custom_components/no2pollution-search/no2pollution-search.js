@@ -14,7 +14,9 @@ App.Elements['no2pollution-search'] = Polymer({
     //behaviors: [],
 
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
-    //listeners: {},
+    listeners: {
+        'marker-template.dom-change': 'setMarkerContent'
+    },
 
     /**
      * https://www.polymer-project.org/1.0/docs/devguide/properties.html
@@ -71,7 +73,6 @@ App.Elements['no2pollution-search'] = Polymer({
                 map.map.setCenter(place.geometry.location);
                 map.map.setZoom(17);
             }
-
         });
     },
 
@@ -105,6 +106,16 @@ App.Elements['no2pollution-search'] = Polymer({
 
         var searchDialog = this.$['search-dialog'];
         searchDialog.close();
+    },
+
+    setMarkerContent: function () {
+        // Info windows don't seem to automatically set content.
+        var markers = this.$.markers.childNodes;
+
+        // Length - 1 to account for template element. (always at end of list)
+        for (var i = 0; i < markers.length - 1; i++) {
+            markers[i].info.setContent(markers[i].innerHTML);
+        }
     },
 
     routeToLocation: function (sender) {

@@ -42,6 +42,8 @@ describe('<no2pollution-search>', function () {
                     if (Math.abs(markers[i].latitude - 51.5245592) < epsilon &&
                         Math.abs(markers[i].longitude - (-0.1340401)) < epsilon) {
                         marker = markers[i];
+                        marker.querySelector('h2').textContent.should.equal('University College London');
+                        marker.querySelector('span').textContent.should.equal('Gower St, London WC1E 6BT, United Kingdom');
                         window.clearInterval(handle);
                         done();
                     }

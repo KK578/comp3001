@@ -29,7 +29,7 @@
 
         <!-- Markers -->
         <div id="markers">
-            <template is="dom-repeat" items="{{results}}">
+            <template is="dom-repeat" id="marker-template" items="{{results}}">
                 <google-map-marker map="{{map}}" latitude="{{item.latitude}}" longitude="{{item.longitude}}">
                     <h2>{{item.name}}</h2>
                     <span>{{item.formatted_address}}</span>
