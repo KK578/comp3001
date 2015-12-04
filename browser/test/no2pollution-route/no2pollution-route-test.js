@@ -3,8 +3,16 @@ chai.should();
 describe('<no2pollution-route>', function () {
 	var element;
 
-	before(function () {
-		element = document.querySelector('no2pollution-route');
+	before(function (done) {
+        element = document.querySelector('no2pollution-route');
+
+        var handle = window.setInterval(function () {
+            if (element.$.api.libraryLoaded) {
+                element.map = document.querySelector('google-map').map;
+                done();
+                window.clearInterval(handle);
+            }
+        }, 100);
 	});
 
     it('should make an ajax request on calling "sendRequest"', function () {
