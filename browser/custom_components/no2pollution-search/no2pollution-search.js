@@ -28,7 +28,79 @@ App.Elements['no2pollution-search'] = Polymer({
      *  computed {string}
      *  observer {string}
      */
-    properties: {}
+    properties: {
+        apiKey: {
+            type: String,
+            value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
+            readOnly: true
+        },
+        map: {
+            type: Object
+        },
+        criteria: {
+            type: String
+        },
+        searchInput: {
+            type: String
+        },
+        results: {
+            type: Array
+        }
+    },
 
     /* Functions specific to this element go under here. */
+    attachAutocomplete: function () {
+        /* globals google */
+        var map = document.querySelector("google-map");
+        var autocomplete = new google.maps.places.Autocomplete(this.$['search-input'].$.input);
+        autocomplete.bindTo('bounds', map);
+
+        autocomplete.addListener('place_changed', function () {
+            this.results = [];
+
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                console.log(place);
+                return;
+            }
+
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+                map.map.fitBounds(place.geometry.viewport);
+            } else {
+                map.map.setCenter(place.geometry.location);
+                map.map.setZoom(17);
+            }
+
+        });
+    },
+
+    openSearchDialog: function () {
+        var searchInput = this.$['search-input'];
+        searchInput.value = '';
+        var searchDialog = this.$['search-dialog'];
+        searchDialog.open();
+    },
+    submitSearch: function (e) {
+        //check if 'enter' was pressed
+        switch (e.type) {
+            case 'tap':
+                break;
+
+            case 'keyDown':
+                if (e.keyCode === 13) {
+                    return;
+                }
+                break;
+        }
+
+        // Empty results array before continuing to ensure all google-map-markers
+        // are correctly detached before
+        this.results = [];
+
+        this.set('criteria', this.searchInput);
+        this.set('searchInput', '');
+        var searchDialog = this.$['search-dialog'];
+        searchDialog.close();
+    }
 });

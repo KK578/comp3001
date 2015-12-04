@@ -3,9 +3,16 @@ chai.should();
 describe('<no2pollution-search>', function () {
     var element;
 
-    before(function () {
+    before(function (done) {
         element = document.querySelector('no2pollution-search');
         element.map = document.querySelector('google-map').map;
+
+        var handle = window.setInterval(function () {
+            if (element.$.api.libraryLoaded) {
+                done();
+                window.clearInterval(handle);
+            }
+        }, 100);
     });
 
     it('should open dialog box on calling "openSearchDialog"', function () {
@@ -32,7 +39,7 @@ describe('<no2pollution-search>', function () {
                 for (var i = 0; i < markers.length; i++) {
                     var epsilon = 0.001;
                     if (Math.abs(markers[i].latitude - 51.5245592) < epsilon &&
-                        Math.abs(markers[i].longitude - 0.1340401) < epsilon) {
+                        Math.abs(markers[i].longitude - (-0.1340401)) < epsilon) {
                         window.clearInterval(handle);
                         done();
                     }
