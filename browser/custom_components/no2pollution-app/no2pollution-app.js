@@ -8,7 +8,9 @@ App.Elements['no2pollution-app'] = Polymer({
      */
     //created: function () {},
     //ready: function () {},
-    //attached: function () {},
+    attached: function () {
+        this.async(this.ajaxResponse, 2000);
+    },
 
     /* https://www.polymer-project.org/1.0/docs/devguide/behaviors.html */
     //behaviors: [],
@@ -187,30 +189,44 @@ App.Elements['no2pollution-app'] = Polymer({
 
         ajax.params = {
             start: start,
-            destination: destination
+            end: destination
         };
 
         ajax.generateRequest();
     },
     ajaxResponse: function (e) {
-        var detail = e.detail;
-        var encodedPath = detail.response.polyline;
+        //var detail = e.detail.response;
+        // CrossOrigin issues again. :'D
+        var detail = [{ "start": "n10lz", "end": "n87ng", "polyline": "whqyH|{TJf@LRNLdB`@JJ@fDA?A?A?CBEHADg@?_AAoCMyNi@aBEMD?AAAC?C@EGA@CACC?AeBv@g@TeBfAwFlDoAz@e@ZQRi@j@sB`C}@pA[n@y@rCG\\AZ_DCeAAgBAc@?KCICW@a@?cBAiCAkCBeFCaDC_DE{COw@YWy@Q{@@g@uB}EQc@s@wCe@sBeBgHcAv@mA~@iCtBiBfBqC`DkExEgGjGiCjCq@l@mBvBqBpB_FdFuBhBeBdB{EdEsAlAw@v@c@Tc@JaBHU?wAPcAVaA\\_@TiAl@oAz@]\\y@nA{@dBcArBmAhAy@ZWFgAPU@YEcAa@i@UgBu@}BsAqA}@{DwDkCqCq@s@_ASCAiAMmAGIHi@FWAkBj@UYg@Yg@MqCGSE{BG}BG_ACoAQmAOUKgA]y@o@cBy@YSaAaAs@]q@QcBWWBUA?BABADC@A@A?ArCDdALpAaB\\w@Ao@Gs@Yw@e@oCs@G`@GtBEpE", "distance": 6717.760143754025, "maxNO2": 69, "avgNO2": 49, "maxO3": 31, "avgO3": 28, "maxPM10": 20, "avgPM10": 15, "maxPM25": 6, "avgPM25": 7 }, { "start": "n10lz", "end": "n87ng", "polyline": "whqyH|{TC[Be@Pk@HIJGtBSAsDBWEO?QCYGMSIIEEEa@KqBs@UQq@[g@MQBGqAUsGGUMKEMi@cFc@EW@gATwBf@}FxAeBj@iA`@_A`@aD`BaH|DoBjAwCjB}AnAwClBe@Z]{@yB}EQWKNIP]k@kBaCaA}AQg@OaA]}CYiCU_A]}@]m@q@q@WQUGa@CmAPgKtBCJGJG@IGCK_EbA_GxAEpAEVODuCT{BIMESUi@]OEU@cAa@_AUsBS{@CyAOCAKe@UHUHOFQ@oDQsAMOKSUMMI?IDO]aBY_ALS@GCOOwCfFgA`BiCxCyA`CkBjDmCpFmAjD_IbUKn@GlAUjCOr@s@hB[~@}@fC_BrDcBjDMZ]d@gClBo@`@aBz@u@\\cBt@aD`BaDdBiAv@_ExBe@VIJ]b@_ASCAwCUIHi@FWA[HoA`@UYg@Yg@MqCGSE{BG}BG_ACoAQmAOUKgA]y@o@cBy@YSaAaAs@]q@QcBWWBUA?@A@AFABE@ArCDdALpAaB\\w@Ao@Gs@Yw@e@oCs@G`@GtBEpE", "distance": 7207.600690712004, "maxNO2": 65, "avgNO2": 42, "maxO3": 27, "avgO3": 24, "maxPM10": 17, "avgPM10": 13, "maxPM25": 7, "avgPM25": 7 }, { "start": "n10lz", "end": "n87ng", "polyline": "whqyH|{TC[Be@Pk@HIJGtBSAsDBWEO?QCYGMSIIEEEa@KqBs@UQq@[g@MQBGqAUsGGUMKEMi@cFKyAOkDa@oKe@FyCZuEj@oEVk@@aAGcBKMBiAKm@EQAOJONCEMG}BcAmDiB_CgAyEgCaDgBeAo@aAm@u@o@mBgBUS}BwAoBmAGm@]@SCeB]oAc@WEuAHaDBgBIuCOO@OBmAr@_@Va@JeAJiCTiD?cEIWBYXe@l@qAxBkCdEkAnB_@v@o@dAw@jAgAxBqBpDs@tAg@dAP^N^wAvBs@fAaCdEcA|AwBbCoBzCsDdHeAvBe@pAuBhG{CvIuAzDGXKxAGjAUdB_@bAuBdG_BrDy@~Aw@fB]d@aAv@uA`AuAv@q@\\{B~@iDjBqDjBiAv@aCrAcB|@g@n@aAUq@GaAIe@CEFE@u@FS@mA\\SHUYy@a@gDMSEuBGS@oDM}Ca@s@Uq@Yw@k@wBkAaAaAs@]q@QeAOg@Gc@??@?@ABADGDCnB@h@RpCaB\\w@Ao@Gs@Yw@e@oCs@Ix@KnH", "distance": 7363.43140614427, "maxNO2": 64, "avgNO2": 42, "maxO3": 23, "avgO3": 21, "maxPM10": 16, "avgPM10": 16, "maxPM25": 6, "avgPM25": 5 }];
 
-        var mapAPI = this.$['map-canvas'].$.api.api;
-        var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
+        this.paths = [];
 
-        // HACK: Item in template repeat does not seem to be able to access functions at bind
-        for (var i = 0; i < decodedPath.length; i++) {
-            decodedPath[i].lat = decodedPath[i].lat();
-            decodedPath[i].lng = decodedPath[i].lng();
+        for (var i = 0; i < detail.length; i++) {
+            var item = detail[i];
+            var encodedPath = item.polyline;
+
+            var mapAPI = this.$['map-canvas'].$.api.api;
+            var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
+
+            // HACK: Item in template repeat does not seem to be able to access functions at bind
+            for (var j = 0; j < decodedPath.length; j++) {
+                decodedPath[j].lat = decodedPath[j].lat();
+                decodedPath[j].lng = decodedPath[j].lng();
+            }
+
+            detail[i].polyline = decodedPath;
         }
 
-        this.path = decodedPath;
+        this.paths = detail;
+
+        // TODO: Handle click events on polylines to display data.
+        // TODO: Switch back to using Heroku Backend app on fixed.
     },
     ajaxError: function (e) {
         var detail = e.detail;
         console.log(detail);
 
+        //this.ajaxResponse(e);
         this.fire('toast-message', {
             message: 'Sorry, an error occurred while requesting a route.'
         });
