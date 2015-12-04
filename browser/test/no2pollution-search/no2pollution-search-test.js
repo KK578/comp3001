@@ -6,10 +6,10 @@ describe('<no2pollution-search>', function () {
 
     before(function (done) {
         element = document.querySelector('no2pollution-search');
-        element.map = document.querySelector('google-map').map;
 
         var handle = window.setInterval(function () {
             if (element.$.api.libraryLoaded) {
+                element.map = document.querySelector('google-map').map;
                 done();
                 window.clearInterval(handle);
             }
@@ -22,7 +22,7 @@ describe('<no2pollution-search>', function () {
         searchDialog.opened.should.equal(true);
     });
 
-    it('should show markers on submitting search dialog', function (done) {
+    it('should close dialog on submitting', function () {
         var input = element.querySelector('#search-input');
         input.value = 'University College London, Gower Street, London, United Kingdom';
 
@@ -31,7 +31,9 @@ describe('<no2pollution-search>', function () {
 
         var searchDialog = element.querySelector('#search-dialog');
         searchDialog.opened.should.equal(false);
+    });
 
+    it('should show markers after submitting', function (done) {
         var markersContainer = element.querySelector('#markers');
         var handle = window.setInterval(function () {
             if (markersContainer.childNodes.length > 1) {
