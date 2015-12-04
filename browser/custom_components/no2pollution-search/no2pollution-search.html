@@ -35,7 +35,7 @@
                     <span>{{item.formatted_address}}</span>
                     <div layout vertical center>
                         <!-- This is a horrendous hackaround caused by google-map#235 -->
-                        <paper-button class="btn-route">Route me</paper-button>
+                        <paper-button class="btn-route" onclick="document.querySelector('no2pollution-search').routeToLocation(this)" address$="{{item.formatted_address}}">Route me</paper-button>
                     </div>
                 </google-map-marker>
             </template>

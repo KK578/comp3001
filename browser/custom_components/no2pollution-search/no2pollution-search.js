@@ -82,25 +82,40 @@ App.Elements['no2pollution-search'] = Polymer({
         searchDialog.open();
     },
     submitSearch: function (e) {
-        //check if 'enter' was pressed
         switch (e.type) {
             case 'tap':
                 break;
 
             case 'keyDown':
+                // Check if 'enter' was pressed
                 if (e.keyCode === 13) {
-                    return;
+                    break;
                 }
-                break;
+                /* falls through */
+            default:
+                return;
         }
 
         // Empty results array before continuing to ensure all google-map-markers
         // are correctly detached before
         this.results = [];
 
-        this.set('criteria', this.searchInput);
-        this.set('searchInput', '');
+        this.criteria = this.searchInput;
+        this.searchInput = '';
+
         var searchDialog = this.$['search-dialog'];
         searchDialog.close();
+    },
+
+    routeToLocation: function (sender) {
+        var address = sender.getAttribute('address');
+        var postcodeRegex = /([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)/;
+        // Backend currently uses postcode location to do routing.
+        var postcode = address.match(postcodeRegex)[0];
+        postcode = postcode.replace(/ /g, '');
+
+        this.fire('no2pollution-route', {
+            destination: postcode
+        });
     }
 });
