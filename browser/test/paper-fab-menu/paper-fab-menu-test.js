@@ -7,7 +7,7 @@ describe('<paper-fab-menu>', function () {
         element = document.querySelector('paper-fab-menu');
     });
 
-    it('should template fabs', function () {
+    it('should template fabs', function (done) {
         var buttons = [
             {
                 id: 'btn-my-location',
@@ -27,15 +27,22 @@ describe('<paper-fab-menu>', function () {
         ];
 
         element.buttons = buttons;
-        var buttonContainer = element.querySelector('.dropdown-content');
-        buttonContainer.childNodes.length.should.equal(3);
+        var buttonContainer = element.querySelector('.dropdown-content').childNodes;
 
-        for (var i = 0; i < buttons.length; i++) {
-            buttonContainer[i].id.should.equal(buttons[i].id);
-            buttonContainer[i].icon.should.equal(buttons[i].icon);
-            var tooltip = element.querySelector('paper-tooltip[for="' + buttons[i].id + '"]');
-            tooltip.textContent.should.equal(buttons[i].tooltip);
-        }
+        var handle = window.setInterval(function () {
+            if (buttonContainer.length === 4) {
+                var tooltips = element.querySelectorAll('paper-tooltip');
+                window.clearInterval(handle);
+
+                for (var i = 0; i < buttons.length; i++) {
+                    buttonContainer[i].id.should.equal(buttons[i].id);
+                    buttonContainer[i].icon.should.equal(buttons[i].icon);
+                    tooltips[i].textContent.should.equal(buttons[i].tooltip);
+                }
+
+                done();
+            }
+        }, 100);
     });
 
     it('should call callback on click', function (done) {

@@ -28,7 +28,16 @@ App.Elements['paper-fab-menu'] = Polymer({
      *  computed {string}
      *  observer {string}
      */
-    properties: {}
+    properties: {
+        buttons: {
+            type: Array
+        }
+    },
 
     /* Functions specific to this element go under here. */
+    fabCallback: function (e) {
+        this.async(function () {
+            e.model.item.callback();
+        });
+    }
 });
