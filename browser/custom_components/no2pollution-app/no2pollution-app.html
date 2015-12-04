@@ -50,7 +50,7 @@
                 </google-map-marker>
             </template>
 
-            <template is="dom-repeat" items="{{paths}}" as="path">
+            <template is="dom-repeat" id="template-paths" items="{{paths}}" as="path">
                 <google-map-poly clickable click-events>
                     <template is="dom-repeat" items="{{path.polyline}}">
                         <google-map-point latitude="{{item.lat}}" longitude="{{item.lng}}"></google-map-point>
