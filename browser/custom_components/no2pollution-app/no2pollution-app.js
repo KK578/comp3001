@@ -20,7 +20,8 @@ App.Elements['no2pollution-app'] = Polymer({
         'getDirBtn.tap': 'getDirBtnOnTap',
         'ajax.response': 'ajaxResponse',
         'ajax.error': 'ajaxError',
-        'park-found': 'foundPark'
+        'park-found': 'foundPark',
+        'template-paths.dom-change': 'setupInfo'
     },
 
     /**
@@ -187,25 +188,53 @@ App.Elements['no2pollution-app'] = Polymer({
 
         ajax.params = {
             start: start,
-            destination: destination
+            end: destination
         };
 
         ajax.generateRequest();
     },
     ajaxResponse: function (e) {
-        var detail = e.detail;
-        var encodedPath = detail.response.polyline;
+        var detail = e.detail.response;
 
-        var mapAPI = this.$['map-canvas'].$.api.api;
-        var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
+        this.paths = [];
 
-        // HACK: Item in template repeat does not seem to be able to access functions at bind
-        for (var i = 0; i < decodedPath.length; i++) {
-            decodedPath[i].lat = decodedPath[i].lat();
-            decodedPath[i].lng = decodedPath[i].lng();
+        for (var i = 0; i < detail.length; i++) {
+            var item = detail[i];
+            var encodedPath = item.polyline;
+
+            var mapAPI = this.$['map-canvas'].$.api.api;
+            var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
+
+            // HACK: Item in template repeat does not seem to be able to access functions at bind
+            for (var j = 0; j < decodedPath.length; j++) {
+                decodedPath[j].lat = decodedPath[j].lat();
+                decodedPath[j].lng = decodedPath[j].lng();
+            }
+
+            detail[i].polyline = decodedPath;
         }
 
-        this.path = decodedPath;
+        this.paths = detail;
+    },
+    setupInfo: function (e) {
+        /* globals google */
+        this.async(function () {
+            console.log(e);
+            var polylines = document.querySelectorAll('google-map-poly');
+            console.log(polylines);
+            function createInfoWindow(index, e) {
+                var infoWindow = new google.maps.InfoWindow({
+                    content: '<p>Distance: ' + this.paths[index].distance + '</p>'
+                });
+
+                infoWindow.setPosition(e.latLng);
+                infoWindow.open(document.querySelector('#map-canvas').map);
+            }
+
+            for (var k = 0; k < polylines.length; k++) {
+                google.maps.event.addListener(polylines[k].poly, 'click', createInfoWindow.bind(this, k));
+            }
+        }, 500);
     },
     ajaxError: function (e) {
         var detail = e.detail;
