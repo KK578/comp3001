@@ -18,10 +18,8 @@ App.Elements['no2pollution-app'] = Polymer({
         'myLocationBtn.tap': 'myLocationBtnOnTap',
         'findParkBtn.tap': 'findParkBtnOnTap',
         'getDirBtn.tap': 'getDirBtnOnTap',
-        'ajax.response': 'ajaxResponse',
-        'ajax.error': 'ajaxError',
-        'park-found': 'foundPark',
-        'template-paths.dom-change': 'setupInfo'
+        'no2pollution-route': 'makeRequest',
+        'park-found': 'foundPark'
     },
 
     /**
@@ -94,15 +92,11 @@ App.Elements['no2pollution-app'] = Polymer({
         this.$.search.openSearchDialog();
     },
 
-    routeBtnOnTap: function (sender) {
-        var location = JSON.parse(sender.getAttribute('location'));
-        var postcodeRegex = /([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)/;
+    makeRequest: function (e) {
+        var destination = e.detail.destination;
         // Backend currently uses postcode location to do routing.
-        var postcode = location.formatted_address.match(postcodeRegex)[0];
-
-        var mapsAPI = document.querySelector('google-maps-api');
-        var geocoder = new mapsAPI.api.Geocoder();
-
+        /* globals google */
+        var geocoder = new google.maps.Geocoder();
         var currentLocation = {
             location: {
                 lat: this.userLatitude,
@@ -111,84 +105,25 @@ App.Elements['no2pollution-app'] = Polymer({
         };
 
         geocoder.geocode(currentLocation, function (results) {
-            var currentPostcode = '';
+            var postcode = '';
+            var postcodeRegex = /([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)/;
+
             for (var i = 0; i < results.length; i++) {
                 var match = results[i].formatted_address.match(postcodeRegex);
                 if (match) {
-                    currentPostcode = match[0];
+                    postcode = match[0];
                     break;
                 }
             }
 
             postcode = postcode.replace(' ', '');
-            currentPostcode = currentPostcode.replace(' ', '');
-            this.sendRequest(currentPostcode, postcode);
+
+            var requester = this.$['route-request'];
+            requester.sendRequest(postcode, destination);
             this.fire('toast-message', {
-                message: 'Going from ' + currentPostcode + ' to ' + postcode + '.'
+                message: 'Going from ' + postcode + ' to ' + destination + '.'
             });
         }.bind(this));
-    },
-
-    sendRequest: function (start, destination) {
-        var ajax = this.$.ajax;
-
-        ajax.params = {
-            start: start,
-            end: destination
-        };
-
-        ajax.generateRequest();
-    },
-    ajaxResponse: function (e) {
-        var detail = e.detail.response;
-
-        this.paths = [];
-
-        for (var i = 0; i < detail.length; i++) {
-            var item = detail[i];
-            var encodedPath = item.polyline;
-
-            var mapAPI = this.$['map-canvas'].$.api.api;
-            var decodedPath = mapAPI.geometry.encoding.decodePath(encodedPath);
-
-            // HACK: Item in template repeat does not seem to be able to access functions at bind
-            for (var j = 0; j < decodedPath.length; j++) {
-                decodedPath[j].lat = decodedPath[j].lat();
-                decodedPath[j].lng = decodedPath[j].lng();
-            }
-
-            detail[i].polyline = decodedPath;
-        }
-
-        this.paths = detail;
-    },
-    setupInfo: function (e) {
-        /* globals google */
-        this.async(function () {
-            console.log(e);
-            var polylines = document.querySelectorAll('google-map-poly');
-            console.log(polylines);
-            function createInfoWindow(index, e) {
-                var infoWindow = new google.maps.InfoWindow({
-                    content: '<p>Distance: ' + this.paths[index].distance + '</p>'
-                });
-
-                infoWindow.setPosition(e.latLng);
-                infoWindow.open(document.querySelector('#map-canvas').map);
-            }
-
-            for (var k = 0; k < polylines.length; k++) {
-                google.maps.event.addListener(polylines[k].poly, 'click', createInfoWindow.bind(this, k));
-            }
-        }, 500);
-    },
-    ajaxError: function (e) {
-        var detail = e.detail;
-        console.log(detail);
-
-        this.fire('toast-message', {
-            message: 'Sorry, an error occurred while requesting a route.'
-        });
     }
 });
 
