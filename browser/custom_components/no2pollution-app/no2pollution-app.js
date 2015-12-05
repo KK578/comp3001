@@ -9,12 +9,8 @@ App.Elements['no2pollution-app'] = Polymer({
     //created: function () {},
     ready: function () {
         function myLocation() {
-            var geolocation= this.$.geolocation;
-            var map = this.$['map-canvas'];
-
-            map.latitude = geolocation.latitude;
-            map.longitude = geolocation.longitude;
-            map.zoom = 15;
+            var geolocation = this.$.geolocation;
+            this.centerMap(geolocation.latitude, geolocation.longitude, 15);
         }
 
         function findPark() {
@@ -89,16 +85,25 @@ App.Elements['no2pollution-app'] = Polymer({
     },
 
     /* Functions specific to this element go under here. */
+    centerMap: function (latitude, longitude, zoom) {
+        var map = this.$['map-canvas'];
+
+        map.latitude = latitude;
+        map.longitude = longitude;
+        map.zoom = zoom;
+    },
     foundPark: function (e) {
-        var p = e.detail;
-        this.centerMap(p.geometry.location.lat(), p.geometry.location.lng(), 15);
+        var place = e.detail;
+        var location = place.geometry.location;
         var parkMarker = document.getElementById('parkMarker');
-        parkMarker.latitude = p.geometry.location.lat();
-        parkMarker.longitude = p.geometry.location.lng();
+        parkMarker.latitude = location.lat();
+        parkMarker.longitude = location.lng();
         parkMarker.animation = 'BOUNCE';
 
+        this.centerMap(location.lat(), location.lng(), 15);
+
         this.fire('toast-message', {
-            message: 'The nearest park is: "' + p.name + '".'
+            message: 'The nearest park is: "' + place.name + '".'
         });
     },
 
