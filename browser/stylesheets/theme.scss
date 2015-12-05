@@ -42,7 +42,7 @@ table {
     thead {
         background-color: $theme-primary;
         color: $white-primary;
-        font-size: 24px;
+        font-size: 20px;
         min-height: 64px;
     }
 
@@ -59,19 +59,7 @@ table {
     th, td {
         height: 16px;
         padding: 4px 12px;
-        /* All elements after the first */
-        &:nth-child(n+2) {
-            text-align: right;
-        }
-
-        &:first-of-type {
-            padding-left: 24px;
-            text-align: left;
-        }
-
-        &:last-of-type {
-            padding-right: 24px;
-        }
+        text-align: center;
     }
 }
 

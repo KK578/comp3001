@@ -140,8 +140,8 @@ App.Elements['no2pollution-route'] = Polymer({
             function createContent(path) {
                 var string = [
                     '<p>Distance: ',
-                    path.distance,
-                    '</p><p>Pollution Rating: ',
+                    Math.round(path.distance),
+                    'm</p><p>Pollution Rating: ',
                     path.pollutionRating,
                     '</p>',
                     '<table><thead><tr><th>Pollutant</th><th>Value (&micro;g/m&sup3;)</th></tr></thead><tbody><tr><td>NO2</td><td>',
@@ -208,7 +208,6 @@ App.Elements['no2pollution-route'] = Polymer({
                     }
                 }
             }
-
         }
     }
 });
