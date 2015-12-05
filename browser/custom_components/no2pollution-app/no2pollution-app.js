@@ -7,7 +7,50 @@ App.Elements['no2pollution-app'] = Polymer({
      * using this.async(function).
      */
     //created: function () {},
-    //ready: function () {},
+    ready: function () {
+        function myLocation() {
+            var loc = document.querySelector('geo-location');
+            this.centerMap(loc.latitude, loc.longitude, 15);
+            this.setAccuracyCircle();
+        }
+
+        function findPark() {
+            var currentLocation = {
+                lat: this.userLatitude,
+                lng: this.userLongitude
+            };
+
+            var parkFinder = document.querySelector('park-finder');
+            parkFinder.findPark(currentLocation);
+        }
+
+        function getDirections() {
+            this.$.search.openSearchDialog();
+        }
+
+        this.buttons = [
+            {
+                id: 'btn-my-location',
+                icon: 'maps:my-location',
+                tooltip: 'Find my location',
+                callback: myLocation.bind(this)
+            },
+            {
+                id: 'btn-find-park',
+                icon: 'image:nature',
+                tooltip: 'Find nearest park',
+                callback: findPark.bind(this)
+            },
+            {
+                id: 'btn-get-directions',
+                icon: 'maps:directions',
+                tooltip: 'Bring me somewhere!',
+                callback: getDirections.bind(this)
+            }
+        ];
+
+        this.$.menu.buttons = this.buttons;
+    },
     //attached: function () {},
 
     /* https://www.polymer-project.org/1.0/docs/devguide/behaviors.html */
@@ -15,9 +58,6 @@ App.Elements['no2pollution-app'] = Polymer({
 
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
     listeners: {
-        'myLocationBtn.tap': 'myLocationBtnOnTap',
-        'findParkBtn.tap': 'findParkBtnOnTap',
-        'getDirBtn.tap': 'getDirBtnOnTap',
         'no2pollution-route': 'makeRequest',
         'park-found': 'foundPark'
     },
@@ -39,6 +79,9 @@ App.Elements['no2pollution-app'] = Polymer({
             type: String,
             value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
             readOnly: true
+        },
+        buttons: {
+            type: Array
         }
     },
 
@@ -61,20 +104,6 @@ App.Elements['no2pollution-app'] = Polymer({
         circle.setCircle(myLocationMarker.marker, radius);
     },
 
-    myLocationBtnOnTap: function (e) {
-        var loc = document.querySelector('geo-location');
-        this.centerMap(loc.latitude, loc.longitude, 15);
-        this.setAccuracyCircle();
-    },
-
-    findParkBtnOnTap: function (e) {
-        var loc = document.querySelector('geo-location');
-        var currentLocation = { lat: loc.latitude, lng: loc.longitude };
-
-        var parkFinder = document.querySelector('park-finder');
-        parkFinder.findPark(currentLocation);
-    },
-
     foundPark: function (e) {
         var p = e.detail;
         this.centerMap(p.geometry.location.lat(), p.geometry.location.lng(), 15);
@@ -86,10 +115,6 @@ App.Elements['no2pollution-app'] = Polymer({
         this.fire('toast-message', {
             message: 'The nearest park is: "' + p.name + '".'
         });
-    },
-
-    getDirBtnOnTap: function (e) {
-        this.$.search.openSearchDialog();
     },
 
     makeRequest: function (e) {
