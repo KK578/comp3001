@@ -33,29 +33,42 @@ App.Elements['park-finder'] = Polymer({
             type: String,
             value: 'AIzaSyAWW2GYwT88DQhx09eAItjkdFnFNTBMckw',
             readOnly: true
+        },
+        map: {
+            type: Object
+        },
+
+        place: {
+            type: Object
         }
     },
 
     /* Functions specific to this element go under here. */
     findPark: function(currentLocation) {
-        var mapsAPI = this.$.api;
-        var service = new mapsAPI.api.places.PlacesService(document.createElement('div'));
+        var service = new google.maps.places.PlacesService(document.createElement('div'));
 
         service.nearbySearch({
             location: currentLocation,
             types: ['park'],
-            rankBy: mapsAPI.api.places.RankBy.DISTANCE
+            rankBy: google.maps.places.RankBy.DISTANCE
         }, this.foundParks.bind(this));
 
     },
 
     foundParks: function(results, status) {
-        var mapsAPI = document.querySelector('google-maps-api');
-
-        if (status === mapsAPI.api.places.PlacesServiceStatus.OK) {
-            var p = results[0];
-            this.fire('park-found', p);
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            this.setMarker(results[0]);
         }
-    }
+    },
 
+    setMarker: function (place) {
+        var location = place.geometry.location;
+        var parkMarker = this.$.marker;
+        this.place = place;
+        parkMarker.latitude = location.lat();
+        parkMarker.longitude = location.lng();
+
+        this.map.setCenter(location);
+        this.map.setZoom(15);
+    }
 });
