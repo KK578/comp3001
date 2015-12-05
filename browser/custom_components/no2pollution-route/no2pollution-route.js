@@ -51,7 +51,7 @@ App.Elements['no2pollution-route'] = Polymer({
         sliderValue: {
             type: Number,
             value: 0,
-            observer: 'sliderChanged'
+            observer: 'toggleRoutesBySlider'
         }
     },
 
@@ -120,9 +120,30 @@ App.Elements['no2pollution-route'] = Polymer({
                 //infoWindow.close();
             }
 
+            function createContent(path) {
+                var string = [
+                    '<p>Distance: ',
+                    path.distance,
+                    '</p><p>Pollution Rating: ',
+                    path.pollutionRating,
+                    '</p>',
+                    '<table><thead><tr><th>Pollutant</th><th>Value (&micro;g/m&sup3;)</th></tr></thead><tbody><tr><td>NO2</td><td>',
+                    path.avgNO2,
+                    '</td></tr><tr><td>O3</td><td>',
+                    path.avgO3,
+                    '</td></tr><tr><td>PM10</td><td>',
+                    path.avgPM10,
+                    '</td></tr><tr><td>PM25</td><td>',
+                    path.avgPM25,
+                    '</td></tr></tbody></table>'
+                ].join('');
+
+                return string;
+            }
+
             for (var k = 0; k < polylines.length; k++) {
                 var infoWindow = new google.maps.InfoWindow({
-                    content: '<p>Distance: ' + this.paths[k].distance + '</p>' + '<p>Pollution Rating: ' + this.paths[k].pollutionRating + '</p>'
+                    content: createContent(this.paths[k])
                 });
 
                 this.infoWindows[k] = infoWindow;
@@ -131,6 +152,8 @@ App.Elements['no2pollution-route'] = Polymer({
                 polylines[k].poly.addListener('mouseout', polylineExit.bind(this, k));
             }
         }, 500);
+
+        this.toggleRoutesBySlider();
     },
     ajaxError: function (e) {
         var detail = e.detail;
@@ -141,13 +164,13 @@ App.Elements['no2pollution-route'] = Polymer({
         });
     },
 
-    sliderChanged: function (n) {
+    toggleRoutesBySlider: function () {
         if (this.paths) {
             this.infoWindows.map(function (info) {
                 info.close();
             });
 
-            var rating = n * 20;
+            var rating = this.sliderValue * 20;
             var polylines = this.querySelectorAll('google-map-poly');
             for (var i = 0; i < polylines.length; i++) {
                 if (polylines[i].rating >= rating) {

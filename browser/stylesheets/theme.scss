@@ -36,7 +36,6 @@ a {
 
 table {
     border-spacing: 0;
-    width: 100%;
     overflow-x: auto;
     table-layout: fixed;
 
@@ -58,7 +57,7 @@ table {
     }
 
     th, td {
-        height: 56px;
+        height: 16px;
         padding: 4px 12px;
         /* All elements after the first */
         &:nth-child(n+2) {
