@@ -1,80 +1,31 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html" />
 
 <!-- Iron -->
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html" />
-<link rel="import" href="../../bower_components/iron-icons/maps-icons.html" />
-<link rel="import" href="../../bower_components/iron-icons/image-icons.html" />
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
 <!-- Paper -->
-<link rel="import" href="../../bower_components/paper-fab/paper-fab.html" />
-<link rel="import" href="../../bower_components/paper-button/paper-button.html" />
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html" />
-<link rel="import" href="../../bower_components/paper-input/paper-input.html" />
-<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html" />
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
 <link rel="import" href="../../bower_components/geo-location/geo-location.html">
-<link rel="import" href="../../bower_components/google-apis/google-maps-api.html" />
 <link rel="import" href="../../bower_components/google-map/google-map.html" />
-<link rel="import" href="../../bower_components/google-map/google-map-search.html" />
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html" />
-<link rel="import" href="../../bower_components/google-map/google-map-point.html" />
-<link rel="import" href="../../bower_components/google-map/google-map-poly.html" />
-
-<link rel="import" href="../../bower_components/paper-fab-transitions/paper-fab-speed-dial.html" />
 
 <dom-module id="no2pollution-app">
     <link rel="import" type="css" href="no2pollution-app.css?__inline" />
     <template>
-        <iron-ajax id="ajax" url="https://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
-
-        <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
-        <google-maps-api api-key="[[apiKey]]" version="3.exp" on-api-load="on_api_load"></google-maps-api>
+        <geo-location id="geolocation" watch-pos high-accuracy position="{{userPosition}}" latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <park-finder api-key="[[apiKey]]"></park-finder>
 
-        <google-map id="map-canvas" map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" mouse-events>
-            <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}"></google-map-search>
-            <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
+        <no2pollution-route id="route-request" map="{{map}}"></no2pollution-route>
+
+        <google-map id="map-canvas" map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" click-events mouse-events>
             <google-map-marker id="parkMarker"></google-map-marker>
-            <map-circle></map-circle>
-
-            <template is="dom-repeat" items="{{results}}" as="marker">
-                <google-map-marker latitude="{{marker.latitude}}" longitude="{{marker.longitude}}">
-                    <h2>{{marker.name}}</h2>
-                    <span>{{marker.formatted_address}}</span>
-                    <div layout vertical center>
-                        <!-- This is a horrendous hackaround caused by google-map#235 -->
-                        <paper-button class="colorful" onclick="document.querySelector('no2pollution-app').routeBtnOnTap(this)" location$="{{marker}}">Route me</paper-button>
-                    </div>
-                </google-map-marker>
-            </template>
-
-            <google-map-poly>
-                <template is="dom-repeat" items="{{path}}">
-                    <google-map-point latitude="{{item.lat}}" longitude="{{item.lng}}"></google-map-point>
-                </template>
-            </google-map-poly>
+            <map-circle map="[[map]]" position="[[userPosition]]"></map-circle>
         </google-map>
 
-        <paper-fab-speed-dial>
-            <paper-fab icon="menu" class="dropdown-trigger"></paper-fab>
-            <div class="dropdown-content">
-                <paper-fab id="myLocationBtn" icon="maps:my-location" mini></paper-fab>
-                <paper-fab id="findParkBtn" icon="image:nature" mini></paper-fab>
-                <paper-fab id="getDirBtn" icon="maps:directions" mini></paper-fab>
-            </div>
-        </paper-fab-speed-dial>
+        <no2pollution-search id="search" map="{{map}}"></no2pollution-search>
 
-        <!-- Search Dialog -->
-        <paper-dialog id="search-dialog" class="search-dialog-pos">
-            <paper-input id="search-input-text" label="Search" on-keydown="srchReqOnEnter" value="{{srchInput}}" autofocus="true"></paper-input>
-        </paper-dialog>
-
-        <!-- Tooltip -->
-        <paper-tooltip for="myLocationBtn" position="left">Getting your location</paper-tooltip>
-        <paper-tooltip for="findParkBtn" position="left">Find nearest park</paper-tooltip>
-        <paper-tooltip for="getDirBtn" position="left">Bring me somewhere!</paper-tooltip>
+        <!-- Menu -->
+        <paper-fab-menu id="menu"></paper-fab-menu>
     </template>
     <script src="no2pollution-app.js?__inline"></script>
 </dom-module>

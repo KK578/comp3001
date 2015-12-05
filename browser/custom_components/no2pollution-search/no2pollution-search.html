@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
+
+<!-- Iron -->
+<!-- Paper -->
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html" />
+<link rel="import" href="../../bower_components/paper-input/paper-input.html" />
+<link rel="import" href="../../bower_components/paper-button/paper-button.html" />
+<!-- Neon -->
+<!-- Custom/Behaviors -->
+<!-- Other -->
+<link rel="import" href="../../bower_components/google-apis/google-maps-api.html" />
+<link rel="import" href="../../bower_components/google-map/google-map-search.html" />
+<link rel="import" href="../../bower_components/google-map/google-map-marker.html" />
+
+<dom-module id="no2pollution-search">
+    <link rel="import" type="css" href="no2pollution-search.css?__inline" />
+    <template>
+        <google-maps-api id="api" api-key="{{apiKey}}" on-api-load="attachAutocomplete"></google-maps-api>
+        <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}"></google-map-search>
+
+        <!-- Search Dialog -->
+        <paper-dialog id="search-dialog">
+            <paper-input id="search-input" label="Search" on-keydown="submitSearch" value="{{searchInput}}" autofocus="true"></paper-input>
+            <div class="layout horizontal">
+                <span class="flex"></span>
+                <paper-button id="search-submit" on-tap="submitSearch">Search</paper-button>
+            </div>
+        </paper-dialog>
+
+        <!-- Markers -->
+        <div id="markers">
+            <template is="dom-repeat" id="marker-template" items="{{results}}">
+                <google-map-marker map="{{map}}" latitude="{{item.latitude}}" longitude="{{item.longitude}}">
+                    <h2>{{item.name}}</h2>
+                    <span>{{item.formatted_address}}</span>
+                    <div layout vertical center>
+                        <!-- This is a horrendous hackaround caused by google-map#235 -->
+                        <paper-button class="btn-route" onclick="document.querySelector('no2pollution-search').routeToLocation(this)" address$="{{item.formatted_address}}">Route me</paper-button>
+                    </div>
+                </google-map-marker>
+            </template>
+        </div>
+    </template>
+    <script src="no2pollution-search.js?__inline"></script>
+</dom-module>

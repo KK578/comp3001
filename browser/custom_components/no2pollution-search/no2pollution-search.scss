@@ -6,22 +6,15 @@
     display: block;
 }
 
-paper-fab-menu {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-}
-
-paper-dialog.search-dialog-pos {
+paper-dialog#search-dialog {
     position: fixed;
     top: 16px;
     left: 16px;
     right: 16px;
-    height: 100px;
     overflow: auto;
 }
 
-paper-button.colorful {
-    color: #4285f4;
+paper-button.btn-route {
+    color: $theme-accent;
     width: 95%;
 }

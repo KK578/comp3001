@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
+
+<!-- Iron -->
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<!-- Paper -->
+<link rel="import" href="../../bower_components/paper-material/paper-material.html" />
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html" />
+<!-- Neon -->
+<!-- Custom/Behaviors -->
+<!-- Other -->
+<link rel="import" href="../../bower_components/google-apis/google-maps-api.html" />
+<link rel="import" href="../../bower_components/google-map/google-map-poly.html" />
+<link rel="import" href="../../bower_components/google-map/google-map-point.html" />
+
+<dom-module id="no2pollution-route">
+    <link rel="import" type="css" href="no2pollution-route.css?__inline" />
+    <template>
+        <google-maps-api id="api" api-key="{{apiKey}}"></google-maps-api>
+        <iron-ajax id="ajax" url="https://no2pollution.herokuapp.com/api/v1/route"></iron-ajax>
+
+        <div id="polys">
+            <template is="dom-repeat" id="template-paths" items="{{paths}}" as="path">
+                <google-map-poly map="{{map}}" rating="{{path.pollutionRating}}" clickable stroke-color="#999" stroke-weight="7" z-index="5">
+                    <template is="dom-repeat" items="{{path.polyline}}">
+                        <google-map-point latitude="{{item.lat}}" longitude="{{item.lng}}"></google-map-point>
+                    </template>
+                </google-map-poly>
+            </template>
+        </div>
+
+        <paper-material id="slider-container" elevation="3">
+            <p>Pollution Slider</p>
+            <paper-slider immediate-value="{{sliderValue}}" max="10"></paper-slider>
+        </paper-material>
+    </template>
+    <script src="no2pollution-route.js?__inline"></script>
+</dom-module>
