@@ -82,6 +82,7 @@ App.Elements['no2pollution-route'] = Polymer({
         var detail = e.detail.response;
 
         this.paths = [];
+        var minimum = 1000;
 
         for (var i = 0; i < detail.length; i++) {
             var item = detail[i];
@@ -96,11 +97,16 @@ App.Elements['no2pollution-route'] = Polymer({
             }
 
             var pollutionRating = item.avgNO2 + item.avgO3 + 1.5 * item.avgPM10 + 1.5 * item.avgPM25;
-            detail[i].pollutionRating = Math.round(pollutionRating);
+            pollutionRating = Math.round(pollutionRating);
+            if (pollutionRating < minimum) {
+                minimum = pollutionRating;
+            }
+            detail[i].pollutionRating = pollutionRating;
             detail[i].polyline = decodedPath;
         }
 
         this.paths = detail;
+        this.minimumRating = minimum;
     },
     setupInfo: function (e) {
         this.async(function () {
@@ -181,16 +187,28 @@ App.Elements['no2pollution-route'] = Polymer({
                 info.close();
             });
 
-            var rating = this.sliderValue * 20;
             var polylines = this.querySelectorAll('google-map-poly');
-            for (var i = 0; i < polylines.length; i++) {
-                if (polylines[i].rating >= rating) {
-                    polylines[i].setAttribute('hidden', '');
-                }
-                else {
+            var i;
+
+            // End of Slider reached, ensure all routes displayed.
+            if (this.sliderValue === 10) {
+                for (i = 0; i < polylines.length; i++) {
                     polylines[i].removeAttribute('hidden');
                 }
             }
+            else {
+                var rating = this.minimumRating + this.sliderValue;
+
+                for (i = 0; i < polylines.length; i++) {
+                    if (polylines[i].rating > rating) {
+                        polylines[i].setAttribute('hidden', '');
+                    }
+                    else {
+                        polylines[i].removeAttribute('hidden');
+                    }
+                }
+            }
+
         }
     }
 });

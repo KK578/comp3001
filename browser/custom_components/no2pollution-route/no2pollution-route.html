@@ -20,7 +20,7 @@
 
         <div id="polys">
             <template is="dom-repeat" id="template-paths" items="{{paths}}" as="path">
-                <google-map-poly map="{{map}}" rating="{{path.pollutionRating}}" clickable stroke-color="#999" stroke-weight="7">
+                <google-map-poly map="{{map}}" rating="{{path.pollutionRating}}" clickable stroke-color="#999" stroke-weight="7" z-index="5">
                     <template is="dom-repeat" items="{{path.polyline}}">
                         <google-map-point latitude="{{item.lat}}" longitude="{{item.lng}}"></google-map-point>
                     </template>
