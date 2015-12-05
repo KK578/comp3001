@@ -47,6 +47,11 @@ App.Elements['no2pollution-route'] = Polymer({
         infoWindows: {
             type: Array,
             value: []
+        },
+        sliderValue: {
+            type: Number,
+            value: 0,
+            observer: 'sliderChanged'
         }
     },
 
@@ -79,6 +84,8 @@ App.Elements['no2pollution-route'] = Polymer({
                 decodedPath[j].lng = decodedPath[j].lng();
             }
 
+            var pollutionRating = item.avgNO2 + item.avgO3 + 1.5 * item.avgPM10 + 1.5 * item.avgPM25;
+            detail[i].pollutionRating = Math.round(pollutionRating);
             detail[i].polyline = decodedPath;
         }
 
@@ -94,7 +101,11 @@ App.Elements['no2pollution-route'] = Polymer({
                 polyline.zIndex = 2;
 
                 var infoWindow = this.infoWindows[index];
-                infoWindow.setPosition(e.latLng);
+                var position = {
+                    lat: e.latLng.lat() + 0.0002,
+                    lng: e.latLng.lng()
+                };
+                infoWindow.setPosition(position);
                 infoWindow.open(this.map);
             }
 
@@ -111,7 +122,7 @@ App.Elements['no2pollution-route'] = Polymer({
 
             for (var k = 0; k < polylines.length; k++) {
                 var infoWindow = new google.maps.InfoWindow({
-                    content: '<p>Distance: ' + this.paths[k].distance + '</p>'
+                    content: '<p>Distance: ' + this.paths[k].distance + '</p>' + '<p>Pollution Rating: ' + this.paths[k].pollutionRating + '</p>'
                 });
 
                 this.infoWindows[k] = infoWindow;
@@ -128,5 +139,24 @@ App.Elements['no2pollution-route'] = Polymer({
         this.fire('toast-message', {
             message: 'Sorry, an error occurred while requesting a route.'
         });
+    },
+
+    sliderChanged: function (n) {
+        if (this.paths) {
+            this.infoWindows.map(function (info) {
+                info.close();
+            });
+
+            var rating = n * 20;
+            var polylines = this.querySelectorAll('google-map-poly');
+            for (var i = 0; i < polylines.length; i++) {
+                if (polylines[i].rating >= rating) {
+                    polylines[i].setAttribute('hidden', '');
+                }
+                else {
+                    polylines[i].removeAttribute('hidden');
+                }
+            }
+        }
     }
 });
