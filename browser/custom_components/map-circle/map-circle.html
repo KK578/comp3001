@@ -5,9 +5,14 @@
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
+<link rel="import" href="../../bower_components/google-apis/google-maps-api.html" />
+<link rel="import" href="../../bower_components/google-map/google-map-marker.html" />
 
 <dom-module id="map-circle">
     <link rel="import" type="css" href="map-circle.css?__inline" />
-    <template></template>
+    <template>
+        <google-maps-api api-key="[[apiKey]]" version="3.exp"></google-maps-api>
+        <google-map-marker id="marker" map="[[map]]" latitude="[[latitude]]" longitude="[[longitude]]"></google-map-marker>
+    </template>
     <script src="map-circle.js?__inline"></script>
 </dom-module>

@@ -35,9 +35,8 @@
 
         <google-map id="map-canvas" map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" mouse-events>
             <google-map-search map="[[map]]" query="{{criteria}}" results="{{results}}"></google-map-search>
-            <google-map-marker id="myLocationMarker" marker="{{userLocationMarker}}" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
-            <map-circle position="[[userPosition]]" marker="[[userLocationMarker]]"></map-circle>
+            <map-circle map="[[map]]" position="[[userPosition]]"></map-circle>
 
             <template is="dom-repeat" items="{{results}}" as="marker">
                 <google-map-marker latitude="{{marker.latitude}}" longitude="{{marker.longitude}}">
