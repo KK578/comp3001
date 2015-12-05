@@ -3,6 +3,8 @@
 <!-- Iron -->
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
 <!-- Paper -->
+<link rel="import" href="../../bower_components/paper-material/paper-material.html" />
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html" />
 <!-- Neon -->
 <!-- Custom/Behaviors -->
 <!-- Other -->
@@ -25,6 +27,10 @@
                 </google-map-poly>
             </template>
         </div>
+
+        <paper-material id="slider-container">
+            <paper-slider value="{{sliderValue}}" max="10"></paper-slider>
+        </paper-material>
     </template>
     <script src="no2pollution-route.js?__inline"></script>
 </dom-module>

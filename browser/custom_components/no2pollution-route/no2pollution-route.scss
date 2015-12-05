@@ -5,3 +5,24 @@
 :host {
     display: block;
 }
+
+paper-material#slider-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+
+    $colors: material-color(green, 800) material-color(green, 600) material-color(green, 500) material-color(lime, 400) material-color(yellow, 600) material-color(amber, 600) material-color(amber, 800) material-color(red, 600) material-color(red, 800) material-color(red, 900);
+
+    @for $i from 1 to 11 {
+        paper-slider.paper-slider-0::shadow paper-progress.paper-progress-0[value="#{$i}"] #primaryProgress.paper-progress {
+            background-color: nth($colors, $i);
+        }
+    }
+
+    paper-slider.paper-slider-0::shadow {
+        #sliderKnobInner.paper-slider {
+            background-color: $theme-primary;
+        }
+    }
+}
