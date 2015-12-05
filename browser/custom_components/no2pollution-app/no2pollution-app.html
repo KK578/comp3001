@@ -12,15 +12,14 @@
 <dom-module id="no2pollution-app">
     <link rel="import" type="css" href="no2pollution-app.css?__inline" />
     <template>
-        <geo-location id="geolocation" watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
+        <geo-location id="geolocation" watch-pos high-accuracy position="{{userPosition}}" latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <park-finder api-key="[[apiKey]]"></park-finder>
 
         <no2pollution-route id="route-request" map="{{map}}"></no2pollution-route>
 
         <google-map id="map-canvas" map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" click-events mouse-events>
-            <google-map-marker id="myLocationMarker" latitude="[[userLatitude]]" longitude="[[userLongitude]]"></google-map-marker>
             <google-map-marker id="parkMarker"></google-map-marker>
-            <map-circle></map-circle>
+            <map-circle map="[[map]]" position="[[userPosition]]"></map-circle>
         </google-map>
 
         <no2pollution-search id="search" map="{{map}}"></no2pollution-search>

@@ -11,7 +11,6 @@ App.Elements['no2pollution-app'] = Polymer({
         function myLocation() {
             var loc = document.querySelector('geo-location');
             this.centerMap(loc.latitude, loc.longitude, 15);
-            this.setAccuracyCircle();
         }
 
         function findPark() {
@@ -91,17 +90,6 @@ App.Elements['no2pollution-app'] = Polymer({
         map.latitude = lat;
         map.longitude = lng;
         map.zoom = zoom;
-    },
-
-    setAccuracyCircle: function () {
-        var myLocationMarker = this.$.myLocationMarker;
-        var loc = this.$.geolocation;
-        var radius = loc.position.coords.accuracy;
-
-        console.log('Location Accuracy: ' + radius);
-
-        var circle = document.querySelector('map-circle');
-        circle.setCircle(myLocationMarker.marker, radius);
     },
 
     foundPark: function (e) {
