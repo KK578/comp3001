@@ -9,8 +9,12 @@ App.Elements['no2pollution-app'] = Polymer({
     //created: function () {},
     ready: function () {
         function myLocation() {
-            var loc = document.querySelector('geo-location');
-            this.centerMap(loc.latitude, loc.longitude, 15);
+            var geolocation= this.$.geolocation;
+            var map = this.$['map-canvas'];
+
+            map.latitude = geolocation.latitude;
+            map.longitude = geolocation.longitude;
+            map.zoom = 15;
         }
 
         function findPark() {
@@ -85,13 +89,6 @@ App.Elements['no2pollution-app'] = Polymer({
     },
 
     /* Functions specific to this element go under here. */
-    centerMap: function (lat, lng, zoom) {
-        var map = this.$['map-canvas'];
-        map.latitude = lat;
-        map.longitude = lng;
-        map.zoom = zoom;
-    },
-
     foundPark: function (e) {
         var p = e.detail;
         this.centerMap(p.geometry.location.lat(), p.geometry.location.lng(), 15);
