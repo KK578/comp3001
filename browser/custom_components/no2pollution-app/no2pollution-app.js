@@ -87,18 +87,18 @@ App.Elements['no2pollution-app'] = Polymer({
 
     /* Functions specific to this element go under here. */
     centerMap: function (lat, lng, zoom) {
-        var map = document.querySelector('google-map');
+        var map = this.$['map-canvas'];
         map.latitude = lat;
         map.longitude = lng;
         map.zoom = zoom;
     },
 
     setAccuracyCircle: function () {
-        var myLocationMarker = document.getElementById('myLocationMarker');
-        var loc = document.querySelector('geo-location');
+        var myLocationMarker = this.$.myLocationMarker;
+        var loc = this.$.geolocation;
         var radius = loc.position.coords.accuracy;
 
-        console.log("Location Accuracy: " + radius);
+        console.log('Location Accuracy: ' + radius);
 
         var circle = document.querySelector('map-circle');
         circle.setCircle(myLocationMarker.marker, radius);
@@ -110,7 +110,7 @@ App.Elements['no2pollution-app'] = Polymer({
         var parkMarker = document.getElementById('parkMarker');
         parkMarker.latitude = p.geometry.location.lat();
         parkMarker.longitude = p.geometry.location.lng();
-        parkMarker.animation = "BOUNCE";
+        parkMarker.animation = 'BOUNCE';
 
         this.fire('toast-message', {
             message: 'The nearest park is: "' + p.name + '".'
@@ -120,7 +120,6 @@ App.Elements['no2pollution-app'] = Polymer({
     makeRequest: function (e) {
         var destination = e.detail.destination;
         // Backend currently uses postcode location to do routing.
-        /* globals google */
         var geocoder = new google.maps.Geocoder();
         var currentLocation = {
             location: {
@@ -135,6 +134,7 @@ App.Elements['no2pollution-app'] = Polymer({
 
             for (var i = 0; i < results.length; i++) {
                 var match = results[i].formatted_address.match(postcodeRegex);
+
                 if (match) {
                     postcode = match[0];
                     break;

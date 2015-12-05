@@ -52,15 +52,14 @@ App.Elements['no2pollution-search'] = Polymer({
 
     /* Functions specific to this element go under here. */
     attachAutocomplete: function () {
-        /* globals google */
-        var map = document.querySelector("google-map");
+        var map = document.querySelector('google-map');
         var autocomplete = new google.maps.places.Autocomplete(this.$['search-input'].$.input);
         autocomplete.bindTo('bounds', map);
 
         autocomplete.addListener('place_changed', function () {
             this.results = [];
-
             var place = autocomplete.getPlace();
+
             if (!place.geometry) {
                 console.log(place);
                 return;
@@ -69,7 +68,8 @@ App.Elements['no2pollution-search'] = Polymer({
             // If the place has a geometry, then present it on a map.
             if (place.geometry.viewport) {
                 map.map.fitBounds(place.geometry.viewport);
-            } else {
+            }
+            else {
                 map.map.setCenter(place.geometry.location);
                 map.map.setZoom(17);
             }

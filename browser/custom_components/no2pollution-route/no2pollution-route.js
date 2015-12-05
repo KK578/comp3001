@@ -63,7 +63,6 @@ App.Elements['no2pollution-route'] = Polymer({
             var item = detail[i];
             var encodedPath = item.polyline;
 
-            /* globals google */
             var decodedPath = google.maps.geometry.encoding.decodePath(encodedPath);
 
             // HACK: Item in template repeat does not seem to be able to access functions at bind
@@ -91,7 +90,8 @@ App.Elements['no2pollution-route'] = Polymer({
             }
 
             for (var k = 0; k < polylines.length; k++) {
-                google.maps.event.addListener(polylines[k].poly, 'click', createInfoWindow.bind(this, k));
+                google.maps.event.addListener(polylines[k].poly, 'click',
+                    createInfoWindow.bind(this, k));
             }
         }, 500);
     },

@@ -12,7 +12,7 @@
 <dom-module id="no2pollution-app">
     <link rel="import" type="css" href="no2pollution-app.css?__inline" />
     <template>
-        <geo-location watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
+        <geo-location id="geolocation" watch-pos high-accuracy latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
         <park-finder api-key="[[apiKey]]"></park-finder>
 
         <no2pollution-route id="route-request" map="{{map}}"></no2pollution-route>
