@@ -18,7 +18,7 @@
             <span>{{place.formatted_address}}</span>
             <div layout vertical center>
                 <!-- This is a horrendous hackaround caused by google-map#235 -->
-                <paper-button class="btn-route" address$="{{place.formatted_address}}">Route me</paper-button>
+                <paper-button class="btn-route" onclick="document.querySelector('park-finder').routeToLocation()" address$="{{place.formatted_address}}">Route me</paper-button>
             </div>
         </google-map-marker>
     </template>
