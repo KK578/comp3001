@@ -9,8 +9,11 @@ App.Elements['no2pollution-app'] = Polymer({
     //created: function () {},
     ready: function () {
         function myLocation() {
-            var geolocation = this.$.geolocation;
-            this.centerMap(geolocation.latitude, geolocation.longitude, 15);
+            this.map.setCenter({
+                lat: this.userLatitude,
+                lng: this.userLongitude
+            });
+            this.map.setZoom(15);
         }
 
         function findPark() {
@@ -57,8 +60,7 @@ App.Elements['no2pollution-app'] = Polymer({
 
     /* https://www.polymer-project.org/1.0/docs/devguide/events.html#event-listeners */
     listeners: {
-        'no2pollution-route': 'makeRequest',
-        'park-found': 'foundPark'
+        'no2pollution-route': 'makeRequest'
     },
 
     /**
@@ -85,28 +87,6 @@ App.Elements['no2pollution-app'] = Polymer({
     },
 
     /* Functions specific to this element go under here. */
-    centerMap: function (latitude, longitude, zoom) {
-        var map = this.$['map-canvas'];
-
-        map.latitude = latitude;
-        map.longitude = longitude;
-        map.zoom = zoom;
-    },
-    foundPark: function (e) {
-        var place = e.detail;
-        var location = place.geometry.location;
-        var parkMarker = document.getElementById('parkMarker');
-        parkMarker.latitude = location.lat();
-        parkMarker.longitude = location.lng();
-        parkMarker.animation = 'BOUNCE';
-
-        this.centerMap(location.lat(), location.lng(), 15);
-
-        this.fire('toast-message', {
-            message: 'The nearest park is: "' + place.name + '".'
-        });
-    },
-
     makeRequest: function (e) {
         var destination = e.detail.destination;
         // Backend currently uses postcode location to do routing.
