@@ -5,3 +5,8 @@
 :host {
     display: block;
 }
+
+paper-button.btn-route {
+    color: $theme-accent;
+    width: 95%;
+}

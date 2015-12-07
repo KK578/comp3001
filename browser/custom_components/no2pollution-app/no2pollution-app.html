@@ -13,12 +13,11 @@
     <link rel="import" type="css" href="no2pollution-app.css?__inline" />
     <template>
         <geo-location id="geolocation" watch-pos high-accuracy position="{{userPosition}}" latitude="{{userLatitude}}" longitude="{{userLongitude}}"></geo-location>
-        <park-finder api-key="[[apiKey]]"></park-finder>
+        <park-finder api-key="[[apiKey]]" map="{{map}}"></park-finder>
 
         <no2pollution-route id="route-request" map="{{map}}"></no2pollution-route>
 
         <google-map id="map-canvas" map="{{map}}" api-key="[[apiKey]]" class="fit" latitude="51.5100" longitude="-360.1212" click-events mouse-events>
-            <google-map-marker id="parkMarker"></google-map-marker>
             <map-circle map="[[map]]" position="[[userPosition]]"></map-circle>
         </google-map>
 

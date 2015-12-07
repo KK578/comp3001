@@ -33,7 +33,7 @@
                 <google-map-marker map="{{map}}" latitude="{{item.latitude}}" longitude="{{item.longitude}}">
                     <h2>{{item.name}}</h2>
                     <span>{{item.formatted_address}}</span>
-                    <div layout vertical center>
+                    <div class="layout vertical center">
                         <!-- This is a horrendous hackaround caused by google-map#235 -->
                         <paper-button class="btn-route" onclick="document.querySelector('no2pollution-search').routeToLocation(this)" address$="{{item.formatted_address}}">Route me</paper-button>
                     </div>
