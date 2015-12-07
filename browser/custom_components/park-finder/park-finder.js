@@ -102,6 +102,7 @@ App.Elements['park-finder'] = Polymer({
                 }
             }
 
+            postcode = postcode.replace(/ /g, '');
             this.fire('no2pollution-route', {
                 destination: postcode
             });

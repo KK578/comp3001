@@ -10,8 +10,8 @@ describe('<no2pollution-search>', function () {
         var handle = window.setInterval(function () {
             if (element.$.api.libraryLoaded) {
                 element.map = document.querySelector('google-map').map;
-                done();
                 window.clearInterval(handle);
+                done();
             }
         }, 100);
     });
