@@ -58,6 +58,9 @@ App.Elements['park-finder'] = Polymer({
 
     foundParks: function(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
+            this.fire('toast-message', {
+                message: 'Your nearest park is ' + results[0].name + '.'
+            });
             this.setMarker(results[0]);
         }
     },

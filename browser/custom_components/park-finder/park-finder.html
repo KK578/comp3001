@@ -13,7 +13,7 @@
     <link rel="import" type="css" href="park-finder.css?__inline" />
     <template>
         <google-maps-api id="api" api-key="[[apiKey]]"></google-maps-api>
-        <google-map-marker id="marker" map="[[map]]">
+        <google-map-marker id="marker" map="[[map]]" animation="BOUNCE">
             <h2>{{place.name}}</h2>
             <span>{{place.formatted_address}}</span>
             <div class="layout vertical center">
