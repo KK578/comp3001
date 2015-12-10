@@ -126,7 +126,7 @@ App.Elements['no2pollution-search'] = Polymer({
         var map = document.querySelector('google-map');
 
         if(this.results) {
-            if(this.results.length===1) {
+            if(this.results.length>0) {
                 var place = this.results[0];
                 // If the place has a geometry, then present it on a map.
                 if (place.geometry.viewport) {
