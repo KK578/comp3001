@@ -116,12 +116,22 @@ App.Elements['no2pollution-route'] = Polymer({
                 var polyline = polylines[index];
                 polyline.strokeColor = '#000';
                 polyline.zIndex = 6;
+            }
+
+            function polylineClick(index, e) {
+                var polyline = polylines[index];
+                polyline.strokeColor = '#000';
+                polyline.zIndex = 6;
 
                 var infoWindow = this.infoWindows[index];
                 var position = {
+
                     lat: e.latLng.lat() + 0.0002,
+
                     lng: e.latLng.lng()
+
                 };
+
                 infoWindow.setPosition(position);
                 infoWindow.open(this.map);
             }
@@ -133,8 +143,9 @@ App.Elements['no2pollution-route'] = Polymer({
 
                 // Closing immediately causes far too much flashing.
                 // Temporarily just disabling it for now.
-                //var infoWindow = this.infoWindows[index];
-                //infoWindow.close();
+                // readded seems to be working ok now
+                var infoWindow = this.infoWindows[index];
+                infoWindow.close();
             }
 
             function createContent(path) {
@@ -165,6 +176,7 @@ App.Elements['no2pollution-route'] = Polymer({
 
                 this.infoWindows[k] = infoWindow;
 
+                polylines[k].poly.addListener('click', polylineClick.bind(this, k));
                 polylines[k].poly.addListener('mousemove', polylineHover.bind(this, k));
                 polylines[k].poly.addListener('mouseout', polylineExit.bind(this, k));
             }

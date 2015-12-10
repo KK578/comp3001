@@ -62,6 +62,17 @@ App.Elements['map-circle'] = Polymer({
     _setCircle: function () {
         var position = this.position.coords;
         var marker = this.$.marker;
+
+        var blueCircle = {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillOpacity: 1,
+            fillColor: '#4285F4',
+            strokeColor: '#FAFBFC',
+            strokeWeight: 1.5,
+            scale: 5
+        };
+
+        marker.icon = blueCircle;
         marker.latitude = position.latitude;
         marker.longitude = position.longitude;
 
@@ -69,8 +80,9 @@ App.Elements['map-circle'] = Polymer({
             /* globals google */
             this.circle = new google.maps.Circle({
                 map: this.map,
-                fillColor: '#3F51B5',
-                strokeColor: '#3F51B5'
+                fillOpacity: 0.3,
+                fillColor: '#4285F4',
+                strokeOpacity: 0
             });
 
             this.circle.bindTo('center', this.$.marker.marker, 'position');

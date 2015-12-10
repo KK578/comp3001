@@ -39,7 +39,7 @@ App.Elements['no2pollution-app'] = Polymer({
             },
             {
                 id: 'btn-find-park',
-                icon: 'image:nature',
+                icon: 'maps:local-florist',
                 tooltip: 'Find nearest park',
                 callback: findPark.bind(this)
             },
@@ -116,7 +116,8 @@ App.Elements['no2pollution-app'] = Polymer({
             var requester = this.$['route-request'];
             requester.sendRequest(postcode, destination);
             this.fire('toast-message', {
-                message: 'Going from ' + postcode + ' to ' + destination + '.'
+                //message: 'Going from ' + postcode + ' to ' + destination + '.'
+                message: 'Calculating cleanest routes'
             });
         }.bind(this));
     }
