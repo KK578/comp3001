@@ -137,11 +137,18 @@ App.Elements['no2pollution-search'] = Polymer({
         var address = sender.getAttribute('address');
         var postcodeRegex = /([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)/;
         // Backend currently uses postcode location to do routing.
-        var postcode = address.match(postcodeRegex)[0];
-        postcode = postcode.replace(/ /g, '');
+        var regexMatches = address.match(postcodeRegex);
+        if (regexMatches) {
+            var postcode = regexMatches[0];
+            postcode = postcode.replace(/ /g, '');
 
-        this.fire('no2pollution-route', {
-            destination: postcode
-        });
+            this.fire('no2pollution-route', {
+                destination: postcode
+            });
+        }else{
+            this.fire('toast-message', {
+                message: 'Currently our app only works for destinations with valid UK postcodes.'
+            });
+        }
     }
 });
