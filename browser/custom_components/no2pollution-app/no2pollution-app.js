@@ -46,7 +46,7 @@ App.Elements['no2pollution-app'] = Polymer({
             {
                 id: 'btn-get-directions',
                 icon: 'maps:directions',
-                tooltip: 'Bring me somewhere!',
+                tooltip: 'Find cleanest route',
                 callback: getDirections.bind(this)
             }
         ];
