@@ -122,7 +122,24 @@ App.Elements['no2pollution-search'] = Polymer({
     },
 
     setMarkerContent: function () {
-        console.log('setMarkerContent');
+        console.log('setMarkerContent size of results: '+this.results.length);
+        var map = document.querySelector('google-map');
+
+        if(this.results) {
+            if(this.results.length===1) {
+                var place = this.results[0];
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    console.log('place has geo.');
+                    map.map.fitBounds(place.geometry.viewport);
+                }
+                else {
+                    console.log('place doesnt geo.');
+                    map.map.setCenter(place.geometry.location);
+                    map.map.setZoom(17);
+                }
+            }
+        }
         // Info windows don't seem to automatically set content.
         var markers = this.$.markers.childNodes;
 
