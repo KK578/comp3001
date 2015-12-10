@@ -94,12 +94,12 @@ App.Elements['no2pollution-search'] = Polymer({
     },
 
     submitSearch: function (e) {
-        console.log('submitSearch');
+        console.log('submitSearch type:'+e.type+' keycode: '+e.keyCode);
         switch (e.type) {
             case 'tap':
                 break;
 
-            case 'keyDown':
+            case 'keydown':
                 // Check if 'enter' was pressed
                 if (e.keyCode === 13) {
                     console.log('Enter pressed');
