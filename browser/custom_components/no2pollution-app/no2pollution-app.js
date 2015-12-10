@@ -39,7 +39,7 @@ App.Elements['no2pollution-app'] = Polymer({
             },
             {
                 id: 'btn-find-park',
-                icon: 'image:nature',
+                icon: 'maps:local-florist',
                 tooltip: 'Find nearest park',
                 callback: findPark.bind(this)
             },
