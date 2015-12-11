@@ -74,7 +74,7 @@ App.Elements['park-finder'] = Polymer({
         parkMarker.longitude = location.lng();
 
         this.map.setCenter(location);
-        this.map.setZoom(15);
+        this.map.setZoom(17);
     },
     setMarkerContent: function () {
         // Info windows don't seem to automatically set content.
